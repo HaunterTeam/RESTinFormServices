@@ -9,6 +9,7 @@ package project.resources;
  *
  * @author luca
  */
+import getphrase.PhraseService;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.persistence.EntityManager;
@@ -61,6 +62,8 @@ public class ServiceWeatherRes {
             }catch(Exception e){}
             
             System.err.println(bmi +" " + oldBmi);
+            PhraseService ps = new PhraseService();
+            System.err.println(ps.getPhrase(bmi, oldBmi, wtype));
             
             return wl;
 	}

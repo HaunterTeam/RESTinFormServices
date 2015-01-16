@@ -48,6 +48,5 @@ public class PhraseRes {
             System.err.println(bmiType +" "+change+" "+weatherType);
             return Phrase.getPhraseByWeatherAndByBmi(bmiType,change, weatherType);
             
-
 	}
 }
