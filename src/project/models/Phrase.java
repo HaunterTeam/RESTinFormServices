@@ -107,7 +107,7 @@ public class Phrase implements Serializable {
     public void setActivity(String activity) {
         this.activity = activity;
     }
-
+    
     public static Phrase getPhraseByWeatherAndByBmi(int bmi,int change,int wType) {
         EntityManager em = EhealthDAO.instance.createEntityManager();
         List<Phrase> m = em.createNamedQuery("Phrase.find", Phrase.class)
@@ -115,7 +115,10 @@ public class Phrase implements Serializable {
                 .setParameter("ch", change)
                 .setParameter("bmi", bmi).getResultList();
         EhealthDAO.instance.closeConnections(em);
+        
         Collections.shuffle(m);
+        
+        System.err.println(m.get(0).activity);
         
         return m.get(0);
     }

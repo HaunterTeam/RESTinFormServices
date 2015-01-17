@@ -66,7 +66,6 @@ public class ServiceWeatherRes {
                 oldBmi= Measure.getOldBmi(idface);
             }catch(Exception e){}
             
-            //System.err.println(bmi +" " + oldBmi);
             PhraseService ps = new PhraseService();
             ArrayList<Phrase> ph = ps.getPhraseS(bmi, oldBmi, w1, w2, w3);
             
@@ -74,6 +73,7 @@ public class ServiceWeatherRes {
             for (int i = 0; i < ph.size(); i++) {
                 awm.add(new ActiWathMerge(ph.get(i), wl.get(i)));
             }
+            
             //WeatherPlan wp = new WeatherPlan(ph, wl);
             
             return awm;

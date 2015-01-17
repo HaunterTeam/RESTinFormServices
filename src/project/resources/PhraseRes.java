@@ -68,7 +68,6 @@ public class PhraseRes {
                     change = 2;
             }
             int bmiType = utils.BMIUtils.getLevelByBmi(bmi);
-            System.err.println("asd");
             ArrayList<Phrase> phs = new ArrayList();
             
             phs.add(Phrase.getPhraseByWeatherAndByBmi(bmiType,change, wT1));

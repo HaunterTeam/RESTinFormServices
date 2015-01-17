@@ -94,7 +94,6 @@ public class PhraseService {
         in.close();
         
         
-        System.err.println(response.toString());
         ArrayList<Phrase> retPhs = new ArrayList<>();
         JSONArray phs = new JSONArray(response.toString());
         for (int i = 0; i < phs.length(); i++) {
@@ -105,6 +104,7 @@ public class PhraseService {
             p.setWeathertype(o.getInt("weathertype"));
             p.setBmirange(o.getInt("bmirange"));
             p.setChange(o.getInt("change"));
+            p.setActivity(o.getString("activity"));
             retPhs.add(p);
         }
         
