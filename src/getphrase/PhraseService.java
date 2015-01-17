@@ -5,23 +5,16 @@
  */
 package getphrase;
 
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat;
-import getweather.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import javassist.compiler.ast.Pair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.omg.CORBA.NameValuePair;
 import project.Settings;
 import project.models.Phrase;
 
@@ -32,25 +25,24 @@ import project.models.Phrase;
 public class PhraseService {
     public static final String BASE_SERVICE = "phrase";
     public static final String BASE_URL = Settings.BASE_PROTOCOL + 
-            Settings.BASE_URL + Settings.BASE_PORT + Settings.SERVICE_PATH;
+            Settings.BASE_URL + ":"+ Settings.BASE_PORT + Settings.SERVICE_PATH;
     
     public static final String REQ_TYPE = "GET";
 
     public PhraseService() {}
     
-    public Phrase getPhrase(double bmi,double oldbmi,int weather) throws MalformedURLException, IOException, JSONException{
+    /*public Phrase getPhrase(double bmi,double oldbmi,int weather) throws MalformedURLException, IOException, JSONException{
         
         String url  = BASE_URL + BASE_SERVICE;
         
-        url += "?bmi=" + bmi + "&oldbmi=" + oldbmi + "&weathertype=" + weather;
-        System.err.println(url);
+        url += "?bmi=" + bmi + "&bmiold=" + oldbmi + "&weathertype=" + weather;
+        
         
         URL obj = new URL(url);
         
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
         con.setRequestMethod(REQ_TYPE);
-        
         int responseCode = con.getResponseCode();
         
         BufferedReader in = new BufferedReader(
@@ -63,25 +55,61 @@ public class PhraseService {
         }
         in.close();
         
+        
         System.err.println(response.toString());
-        /*JSONObject o = new JSONObject(response.toString());
-        JSONArray ja = o.getJSONArray(JSON_LIST);
         
-        ArrayList<Weather> listWeather = new ArrayList();
-        for (int i = 0; i < ja.length(); i++) {
-            JSONObject weather = ja.getJSONObject(i);
-            
-            JSONArray wd = weather.getJSONArray(JSON_WEATHER);
-            JSONObject jo = wd.getJSONObject(0);
-            String weatLoc = jo.getString(JSON_MAIN_WEATHER);
-            
-            JSONObject alltemps = weather.getJSONObject(JSON_TEMPERATURE);
-            double tempAverage = alltemps.getDouble(JSON_TEMPERATURE_AVERAGE);
-            
-            listWeather.add(new Weather(location, tempAverage, weatLoc));
-        }*/
+        JSONObject o = new JSONObject(response.toString());
+        Phrase p = new Phrase();
+        p.setIdphrase(o.getInt("idphrase"));
+        p.setPhrase(o.getString("phrase"));
+        p.setWeathertype(o.getInt("weathertype"));
+        p.setBmirange(o.getInt("bmirange"));
+        p.setChange(o.getInt("change"));
         
-        return null;
+        return p;
+    }*/
+    
+    public ArrayList<Phrase> getPhraseS(double bmi,double oldbmi,int w1,int w2,int w3) throws MalformedURLException, IOException, JSONException{
+        
+        String url  = BASE_URL + BASE_SERVICE;
+        
+        url += "?bmi=" + bmi + "&bmiold=" + oldbmi + "&wt1=" + w1 + "&wt2=" + w2 + "&wt3=" + w3;
+        
+        
+        URL obj = new URL(url);
+        
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        con.setRequestMethod(REQ_TYPE);
+        int responseCode = con.getResponseCode();
+        
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuilder response = new StringBuilder();
+
+        while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+        }
+        in.close();
+        
+        
+        System.err.println(response.toString());
+        ArrayList<Phrase> retPhs = new ArrayList<>();
+        JSONArray phs = new JSONArray(response.toString());
+        for (int i = 0; i < phs.length(); i++) {
+            JSONObject o = phs.getJSONObject(i);
+            Phrase p = new Phrase();
+            p.setIdphrase(o.getInt("idphrase"));
+            p.setPhrase(o.getString("phrase"));
+            p.setWeathertype(o.getInt("weathertype"));
+            p.setBmirange(o.getInt("bmirange"));
+            p.setChange(o.getInt("change"));
+            retPhs.add(p);
+        }
+        
+        
+        return retPhs;
     }
     
 }

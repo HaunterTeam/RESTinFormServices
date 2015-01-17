@@ -9,6 +9,8 @@ package project.resources;
  *
  * @author luca
  */
+import beans.ActiWathMerge;
+import beans.WeatherPlan;
 import getphrase.PhraseService;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,14 +48,17 @@ public class ServiceWeatherRes {
         
 	@GET
         @Produces({ MediaType.APPLICATION_JSON})
-	public ArrayList<Weather> getPhrase(
+	public ArrayList<ActiWathMerge> getPhrase(
                 @QueryParam("token") int tokenPerson) throws IOException {
             
             int idface = 3;
             
             WeatherService ws = new WeatherService();
-            ArrayList<Weather> wl = ws.getWeather("Lima");
-            int wtype = wl.get(0).getType();
+            ArrayList<Weather> wl = ws.getWeather("Peio");
+            int w1 = wl.get(0).getType();
+            int w2 = wl.get(1).getType();
+            int w3 = wl.get(2).getType();
+            
             double bmi = Measure.getLastBmi(idface);
             double oldBmi=0;
             
@@ -61,10 +66,16 @@ public class ServiceWeatherRes {
                 oldBmi= Measure.getOldBmi(idface);
             }catch(Exception e){}
             
-            System.err.println(bmi +" " + oldBmi);
+            //System.err.println(bmi +" " + oldBmi);
             PhraseService ps = new PhraseService();
-            System.err.println(ps.getPhrase(bmi, oldBmi, wtype));
+            ArrayList<Phrase> ph = ps.getPhraseS(bmi, oldBmi, w1, w2, w3);
             
-            return wl;
+            ArrayList<ActiWathMerge> awm = new ArrayList<>();
+            for (int i = 0; i < ph.size(); i++) {
+                awm.add(new ActiWathMerge(ph.get(i), wl.get(i)));
+            }
+            //WeatherPlan wp = new WeatherPlan(ph, wl);
+            
+            return awm;
 	}
 }
