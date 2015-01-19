@@ -25,33 +25,21 @@ import project.models.Phrase;
  * @author luca
  */
 public class PhraseService {
-    public static final String BASE_SERVICE = "phrase";
-    public static final String PHRASE_URL = "";
-    public static final String BASE_PORT = "8010";
-    public static final String SERVICE_PATH = "/phrase-service/";
-    
-    
-    
-    public static final String BASE_URL = Settings.BASE_PROTOCOL + 
-    		Settings.BASE_URL + ":" + BASE_PORT + SERVICE_PATH;
     
     public static final String REQ_TYPE = "GET";
 
     public PhraseService() {}
     
-    public ArrayList<Phrase> getPhraseS(double bmi,double oldbmi,int w1,int w2,int w3) throws MalformedURLException, IOException, JSONException{
+    public ArrayList<Phrase> getPhraseS(int bmi_range, int change) throws MalformedURLException, IOException, JSONException{
         
-        String url  = BASE_URL + BASE_SERVICE;
-        
-        url += "?bmi=" + bmi + "&bmiold=" + oldbmi + "&wt1=" + w1 + "&wt2=" + w2 + "&wt3=" + w3;
-        
+        String url  = Settings.BASE_PROTOCOL + Settings.PH_BASE_URL + Settings.PH_BASE_PORT + Settings.PH_BASE_PATH;
+        url += "?bmi_range=" + bmi_range + "&change=" + change;
         
         URL obj = new URL(url);
         
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
         con.setRequestMethod(REQ_TYPE);
-        int responseCode = con.getResponseCode();
         
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
@@ -62,7 +50,6 @@ public class PhraseService {
                 response.append(inputLine);
         }
         in.close();
-        
         
         ArrayList<Phrase> retPhs = new ArrayList<>();
         JSONArray phs = new JSONArray(response.toString());
