@@ -27,6 +27,7 @@ public class RequestHandler {
     }
     public String getRequestResult()
     {
+        set_service(get_client().target(UriBuilder.fromUri(get_url()).build()));
         set_response(get_service().path("").request().accept(MediaType.APPLICATION_JSON).get());
 
         if(get_response() != null)
