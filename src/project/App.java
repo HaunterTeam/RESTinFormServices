@@ -1,5 +1,6 @@
 package project;
 
+import getfood.FoodService;
 import getphrase.PhraseService;
 
 import java.io.IOException;
@@ -23,13 +24,16 @@ public class App
             hostname = "localhost";
         }
 
-        URI baseUrl = new URI(protocol + hostname + port + path);
-        System.out.println("Starting sdelab standalone HTTP server..");
+        //URI baseUrl = new URI(protocol + hostname + port + path); deploy version
+        URI baseUrl = new URI(protocol + "localhost" + port + path);
+        System.out.println("Starting HaunterTeam standalone HTTP server..");
         JdkHttpServerFactory.createHttpServer(baseUrl, createApp());
         System.out.println("server starts on " + baseUrl + "\n [kill the process to exit]");
         
         /*PhraseService p = new PhraseService();
         System.out.println(p.getPhraseS(34, 30, 1, 0, 0));*/
+        //FoodService service = new FoodService();
+        //service.getFoodNutritionValues("pizza");
     }
 
     public static ResourceConfig createApp() {
