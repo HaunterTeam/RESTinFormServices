@@ -26,50 +26,18 @@ import project.models.Phrase;
  */
 public class PhraseService {
     public static final String BASE_SERVICE = "phrase";
+    public static final String PHRASE_URL = "";
+    public static final String BASE_PORT = "8010";
+    public static final String SERVICE_PATH = "/phrase-service/";
+    
+    
+    
     public static final String BASE_URL = Settings.BASE_PROTOCOL + 
-    		Settings.BASE_URL + ":" + Settings.BASE_PORT + Settings.SERVICE_PATH;
+    		Settings.BASE_URL + ":" + BASE_PORT + SERVICE_PATH;
     
     public static final String REQ_TYPE = "GET";
 
     public PhraseService() {}
-    
-    /*
-    public Phrase getPhrase(double bmi,double oldbmi,int weather) throws MalformedURLException, IOException, JSONException{
-        
-        String url  = BASE_URL + BASE_SERVICE;
-        
-        url += "?bmi=" + bmi + "&bmiold=" + oldbmi + "&weathertype=" + weather;
-        
-        URL obj = new URL(url);
-        
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-        con.setRequestMethod(REQ_TYPE);
-
-        int responseCode = con.getResponseCode();
-        
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder response = new StringBuilder();
-
-        while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-        }
-        in.close();
-        
-        System.err.println(response.toString());
-        
-        JSONObject o = new JSONObject(response.toString());
-        Phrase p = new Phrase();
-        p.setIdphrase(o.getInt("idphrase"));
-        p.setPhrase(o.getString("phrase"));
-        p.setWeathertype(o.getInt("weathertype"));
-        p.setBmirange(o.getInt("bmirange"));
-        p.setChange(o.getInt("change"));
-        
-        return p;
-    }*/
     
     public ArrayList<Phrase> getPhraseS(double bmi,double oldbmi,int w1,int w2,int w3) throws MalformedURLException, IOException, JSONException{
         
