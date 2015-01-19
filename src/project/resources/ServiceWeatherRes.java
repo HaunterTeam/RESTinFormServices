@@ -9,10 +9,6 @@ package project.resources;
  *
  * @author luca
  */
-import project.getphrase.PhraseService;
-import project.getweather.Weather;
-import project.getweather.WeatherService;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -30,9 +26,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
+import project.beans.ActiWathMerge;
+import project.beans.WeatherPlan;
+import project.getphrase.PhraseService;
+import project.getweather.Weather;
+import project.getweather.WeatherService;
 import project.models.Measure;
 import project.models.Phrase;
-import project.beans.ActiWathMerge;
 
 @Path("/weather")
 public class ServiceWeatherRes {
@@ -51,7 +51,7 @@ public class ServiceWeatherRes {
 	@GET
         @Produces({ MediaType.APPLICATION_JSON})
 	public ArrayList<ActiWathMerge> getPhrase(
-                @QueryParam("token") int tokenPerson) throws IOException {
+                @QueryParam("token") String token) throws IOException {
             
             int idface = 3;
             
@@ -77,7 +77,7 @@ public class ServiceWeatherRes {
                 awm.add(new ActiWathMerge(ph.get(i), wl.get(i)));
             }
             
-            //WeatherPlan wp = new WeatherPlan(ph, wl);
+//            WeatherPlan wp = new WeatherPlan(ph, wl);
             
             return awm;
 	}
