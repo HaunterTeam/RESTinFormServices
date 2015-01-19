@@ -30,7 +30,7 @@ public class BMIUtils {
             BMI = weight / (height*height);
         }catch(ArithmeticException e){
             return ERROR;
-        }
+}
         
         return getLevelByBmi(BMI);
         

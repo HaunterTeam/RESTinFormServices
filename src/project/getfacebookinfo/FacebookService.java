@@ -32,19 +32,20 @@ public class FacebookService {
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuilder response = new StringBuilder();
-
         while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
         }
         in.close();
+        System.err.println(response.toString());
         
         JSONObject o = new JSONObject(response.toString());
-        System.out.println(o.getJSONObject("info").getString("id"));
+        System.out.println(o.getString("id"));
+        System.err.println("asddsaasdsda");
         
         FacebookInfo fi = new FacebookInfo();
-        String id = o.getJSONObject("info").getString("id");
-        String first_name = o.getJSONObject("info").getString("first_name");
-        String location = o.getJSONObject("info").getString("location");
+        String id = o.getString("id");
+        String first_name = o.getString("first_name");
+        String location = o.getString("location");
         fi.setId(id);
         fi.setFirst_name(first_name);
         fi.setLocation(location);

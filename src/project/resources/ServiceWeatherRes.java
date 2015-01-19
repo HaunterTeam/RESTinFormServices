@@ -27,7 +27,8 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
 import project.beans.ActiWathMerge;
-import project.beans.WeatherPlan;
+import project.getfacebookinfo.FacebookInfo;
+import project.getfacebookinfo.FacebookService;
 import project.getphrase.PhraseService;
 import project.getweather.Weather;
 import project.getweather.WeatherService;
@@ -55,6 +56,13 @@ public class ServiceWeatherRes {
             
             int idface = 3;
             
+            FacebookService fb = new FacebookService();
+            FacebookInfo fi = fb.getInfoByToken(token);
+            
+            System.err.println("facebook id = " + fi.getId());
+            System.err.println("facebook location = "  + fi.getLocation());
+            
+            
             WeatherService ws = new WeatherService();
 
             ArrayList<Weather> wl = ws.getWeather("Peio");
@@ -76,9 +84,8 @@ public class ServiceWeatherRes {
             for (int i = 0; i < ph.size(); i++) {
                 awm.add(new ActiWathMerge(ph.get(i), wl.get(i)));
             }
-            
+            System.err.println(awm.get(0).getActivityplan().getActivity());
 //            WeatherPlan wp = new WeatherPlan(ph, wl);
-            
             return awm;
 	}
 }
