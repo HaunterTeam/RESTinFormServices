@@ -27,9 +27,7 @@ public class App
         System.out.println("Starting sdelab standalone HTTP server..");
         JdkHttpServerFactory.createHttpServer(baseUrl, createApp());
         System.out.println("server starts on " + baseUrl + "\n [kill the process to exit]");
-        
-        /*PhraseService p = new PhraseService();
-        System.out.println(p.getPhraseS(34, 30, 1, 0, 0));*/
+
     }
 
     public static ResourceConfig createApp() {
