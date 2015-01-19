@@ -30,10 +30,10 @@ public class PhraseService {
 
     public PhraseService() {}
     
-    public ArrayList<Phrase> getPhraseS(int bmi_range, int change) throws MalformedURLException, IOException, JSONException{
+    public ArrayList<Phrase> getPhraseS(double bmilvl, double change,int w1,int w2,int w3) throws MalformedURLException, IOException, JSONException{
         
         String url  = Settings.BASE_PROTOCOL + Settings.PH_BASE_URL + Settings.PH_BASE_PORT + Settings.PH_BASE_PATH;
-        url += "?bmi_range=" + bmi_range + "&change=" + change;
+        url += "?bmilvl=" + bmilvl + "&change=" + change + "&wt1=" + w1 + "&wt2=" + w2 + "&wt3=" + w3;
         
         URL obj = new URL(url);
         

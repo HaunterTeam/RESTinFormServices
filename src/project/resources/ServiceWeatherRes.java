@@ -27,6 +27,8 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
 import project.beans.ActiWathMerge;
+import project.businesslogic.BmiObj;
+import project.businesslogic.BusinessLogicService;
 import project.getfacebookinfo.FacebookInfo;
 import project.getfacebookinfo.FacebookService;
 import project.getphrase.PhraseService;
@@ -50,7 +52,7 @@ public class ServiceWeatherRes {
 	private EntityManagerFactory entityManagerFactory;
         
 	@GET
-        @Produces({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
 	public ArrayList<ActiWathMerge> getPhrase(
                 @QueryParam("token") String token) throws IOException {
             
@@ -58,10 +60,6 @@ public class ServiceWeatherRes {
             
             FacebookService fb = new FacebookService();
             FacebookInfo fi = fb.getInfoByToken(token);
-            
-            System.err.println("facebook id = " + fi.getId());
-            System.err.println("facebook location = "  + fi.getLocation());
-            
             
             WeatherService ws = new WeatherService();
 
@@ -77,8 +75,12 @@ public class ServiceWeatherRes {
                 oldBmi= Measure.getOldBmi(idface);
             }catch(Exception e){}
             
+            // BL
+            BusinessLogicService bl = new BusinessLogicService();
+            BmiObj bmiobj = bl.calculateBmiLvlAndChange(bmi, oldBmi);
+            
             PhraseService ps = new PhraseService();
-            ArrayList<Phrase> ph = ps.getPhraseS(bmi, oldBmi, w1, w2, w3);
+            ArrayList<Phrase> ph = ps.getPhraseS(bmiobj.getBmilvl(), bmiobj.getChange(), w1, w2, w3);
             
             ArrayList<ActiWathMerge> awm = new ArrayList<>();
             for (int i = 0; i < ph.size(); i++) {

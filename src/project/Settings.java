@@ -27,5 +27,10 @@ public final class Settings {
     public static final String PH_BASE_URL = "localhost:";
 	public static final String PH_BASE_PORT = "8010";
 	public static final String PH_BASE_PATH = "/phrase-service/phrase";
+	
+    // BmiCalc Service
+    public static final String CALC_BASE_URL = "localhost:";
+	public static final String CALC_BASE_PORT = "8030";
+	public static final String CALC_BASE_PATH = "/bmicalc-service/bmiutil";
 
 }
