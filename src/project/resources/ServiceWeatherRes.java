@@ -9,9 +9,9 @@ package project.resources;
  *
  * @author luca
  */
-import getphrase.PhraseService;
-import getweather.Weather;
-import getweather.WeatherService;
+import project.getphrase.PhraseService;
+import project.getweather.Weather;
+import project.getweather.WeatherService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import javax.ws.rs.core.UriInfo;
 
 import project.models.Measure;
 import project.models.Phrase;
-import beans.ActiWathMerge;
+import project.beans.ActiWathMerge;
 
 @Path("/weather")
 public class ServiceWeatherRes {

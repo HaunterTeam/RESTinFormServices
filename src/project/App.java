@@ -1,7 +1,7 @@
 package project;
 
-import getfood.FoodService;
-import getphrase.PhraseService;
+import project.getfood.FoodService;
+import project.getphrase.PhraseService;
 
 import java.io.IOException;
 import java.net.InetAddress;

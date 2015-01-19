@@ -1,6 +1,6 @@
 package project.resources;
 
-import getfacebookinfo.FacebookService;
+import project.getfacebookinfo.FacebookService;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

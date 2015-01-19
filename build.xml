@@ -1,78 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- You may freely edit this file. See commented blocks below for -->
-<!-- some examples of how to customize the build. -->
-<!-- (If you delete it and reopen the project it will be recreated.) -->
-<!-- By default, only the Clean and Build commands use this build script. -->
-<!-- Commands such as Run, Debug, and Test only use this build script if -->
-<!-- the Compile on Save feature is turned off for the project. -->
-<!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
-<!-- in the project's Project Properties dialog box.-->
-<<<<<<< HEAD
-<project name="Director" basedir=".">
-    <description>Builds, tests, and runs the project Director.</description>
-=======
-<project name="Director" default="default" basedir=".">
-    <description>Builds, tests, and runs the project Director.</description>
-    <import file="nbproject/build-impl.xml"/>
->>>>>>> d8218d93f2498dae205f04d681ee1a1b8e780feb
-    <!--
+<!-- ================================= 
+    Introduction to Service Design and Engineering Laboratory
+    Description: ANT build script for the session on JAXB and Dozer 
+    Author: cdparra
+    
+    Notes: 
+    
+    * This build file includes targets to download and install in your local project the Apache IVY jar
+    * IVY is used to manage dependencies on projects (e.g., jaxb libraries, jackson libraries for json, etc.) 
+    * 
+       TO USE IVY IN YOUR PROJECTS IN ORDER TO GET MANAGE DEPENDENCIES, MAKE SURE THE FOLLOWING LINES ARE
+       IN YOUR BUILD.XML UNTILL 'IVY-END-LINE'
+       
+       # The target "download-ivy" and "install-ivy" will download the ivy jar and place it in the "ivy" folder
+       # 
+-->
+<project name="PhraseService" default="compile" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
-    There exist several targets which are by default empty and which can be 
-    used for execution of your tasks. These targets are usually executed 
-    before and after some main targets. They are: 
+	<!-- PART 1: Ivy properties, download, installation and configuration -->
+	<property name="ivy.install.version" value="2.4.0-rc1" />
+	<property name="ivy.jar.dir" value="${basedir}/ivy" />
+	<property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
 
-      -pre-init:                 called before initialization of project properties
-      -post-init:                called after initialization of project properties
-      -pre-compile:              called before javac compilation
-      -post-compile:             called after javac compilation
-      -pre-compile-single:       called before javac compilation of single file
-      -post-compile-single:      called after javac compilation of single file
-      -pre-compile-test:         called before javac compilation of JUnit tests
-      -post-compile-test:        called after javac compilation of JUnit tests
-      -pre-compile-test-single:  called before javac compilation of single JUnit test
-      -post-compile-test-single: called after javac compilation of single JUunit test
-      -pre-jar:                  called before JAR building
-      -post-jar:                 called after JAR building
-      -post-clean:               called after cleaning build products
+	<!-- this targe will donwload ivy.jar if its inot in the "ivy" folder yet -->
+	<target name="download-ivy" unless="skip.download">
+		<mkdir dir="${ivy.jar.dir}"/>
+		<!-- download Ivy from web site so that it can be used even without any special installation -->
+		<echo message="installing ivy..."/>
+		<get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" dest="${ivy.jar.file}" usetimestamp="true"/>
+	</target>
 
-    (Targets beginning with '-' are not intended to be called on their own.)
+	<!--
+			 ================================= 
+			          target: install-ivy         
+			            this target is not necessary if you put ivy.jar in your ant lib directory
+			            if you already have ivy in your ant lib, you can simply remove this
+			            target and the dependency the 'init' target has on it
+			         ================================= 
+			-->
+	<target name="install-ivy" depends="download-ivy" description="--> install ivy">
+		<!--
+			 try to load ivy here from local ivy dir, in case the user has not already dropped
+			              it into ant's lib dir (note that the latter copy will always take precedence).
+			              We will not fail as long as local lib dir exists (it may be empty) and
+			              ivy is in at least one of ant's lib dir or the local lib dir. 
+			-->
+		<path id="ivy.lib.path">
+			<fileset dir="${ivy.jar.dir}" includes="*.jar"/>
+		</path>
+		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+	</target>
 
-    Example of inserting an obfuscator after compilation could look like this:
+	<!-- PART 2: General properties definitions -->
+	<property name="build.dir" value="build" />
+	<property name="src.dir" value="src" />
+	<property name="lib.dir" value="lib" />
+	<property name="web.dir" value="." />
 
-        <target name="-post-compile">
-            <obfuscate>
-                <fileset dir="${build.classes.dir}"/>
-            </obfuscate>
-        </target>
-
-    For list of available properties check the imported 
-    nbproject/build-impl.xml file. 
+	<!-- ================================= 
+	          target: resolve downloads the dependencies to your lib folder              
+	         ================================= -->
+	<target name="resolve" depends="install-ivy" description="--> retrieve dependencies with ivy">
+		<ivy:retrieve pattern="${lib.dir}/[type]s-[artifact]-[revision].[ext]"/>
+	</target>
 
 
-    Another way to customize the build is by overriding existing main targets.
-    The targets of interest are: 
+	<!-- paths where ivy libraries will be downloaded, use them as classpathref in your compilation and running tasks  -->
+	<path id="lib.path.id">
+		<fileset dir="${lib.dir}" />
+	</path>
 
-      -init-macrodef-javac:     defines macro for javac compilation
-      -init-macrodef-junit:     defines macro for junit execution
-      -init-macrodef-debug:     defines macro for class debugging
-      -init-macrodef-java:      defines macro for class execution
-      -do-jar:                  JAR building
-      run:                      execution of project 
-      -javadoc-build:           Javadoc generation
-      test-report:              JUnit report generation
 
-    An example of overriding the target for project execution could look like this:
+	<path id="run.path.id">
+		<path refid="lib.path.id" />
+		<fileset dir="${build.dir}">
+			<include name="*.class" />
+			<include name="**/*.class" />
+			<exclude name="**/*Test*" />
+		</fileset>
+	</path>
 
-        <target name="run" depends="Director-impl.jar">
-            <exec dir="bin" executable="launcher.exe">
-                <arg file="${dist.jar}"/>
-            </exec>
-        </target>
+	<!-- PART 3: compilation and execution targets for this session -->
+	<target name="init" depends="install-ivy, resolve">
+		<echo message="Init has been called" />
+		<mkdir dir="${build.dir}" />
+		<echo message="${build.dir} has been created" />
+	</target>
 
-    Notice that the overridden target depends on the jar target and not only on 
-    the compile target as the regular run target does. Again, for a list of available 
-    properties which you can use, check the target you are overriding in the
-    nbproject/build-impl.xml file. 
+	<target name="clean">
+		<echo message="Clean has been called" />
+		<delete dir="${build.dir}" />
+		<echo message="${build.dir} has been deleted" />
+		<delete dir="${src.dir}/${xjc.package}" />
+		<echo message="${src.dir}/${xjc.package} has been deleted" />
+		<delete file="catalog.xml" />
+		<echo message="catalog.xml has been deleted" />
+	</target>
 
-    -->
+	<target name="compile" depends="init">
+		<echo message="Compile target has been called" />
+		<javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="lib.path.id" includeAntRuntime="false">
+		</javac>
+		<copy todir="${build.dir}" overwrite="true">
+			<fileset dir="${src.dir}">
+				<include name="*.xml" />
+			</fileset>
+		</copy>
+		<copy todir="${build.dir}/META-INF/" overwrite="true">
+			<fileset dir="${src.dir}/META-INF/">
+				<include name="*.xml" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="execute">
+		<echo message="Executing Phrase Service" />
+		<java classname="project.App" classpath="build" fork="true">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar" />
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+
 </project>

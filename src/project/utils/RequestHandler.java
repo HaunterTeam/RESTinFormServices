@@ -1,4 +1,4 @@
-package utils;
+package project.utils;
 
 import org.glassfish.jersey.client.ClientConfig;
 

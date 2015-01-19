@@ -1,4 +1,4 @@
-package getfood;
+package project.getfood;
 
 /**
  * Created by les on 19/01/15.

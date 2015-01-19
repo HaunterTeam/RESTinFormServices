@@ -1,7 +1,7 @@
-package getfood;
+package project.getfood;
 
 import org.json.JSONObject;
-import utils.RequestHandler;
+import project.utils.RequestHandler;
 
 /**
  * Created by les on 19/01/15.

@@ -1,4 +1,4 @@
-package getfacebookinfo;
+package project.getfacebookinfo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
