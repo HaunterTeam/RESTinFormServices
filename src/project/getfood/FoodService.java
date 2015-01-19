@@ -9,7 +9,7 @@ import project.utils.RequestHandler;
 
 public class FoodService {
 
-    public static final String BASE_URL = "http://localhost:8443/nutritionix/";
+    public static final String BASE_URL = "http://95.85.59.245:8443/nutritionix/food/";
     private RequestHandler handler;
 
     public FoodService(){
@@ -18,7 +18,7 @@ public class FoodService {
 
     public Food getFoodNutritionValues(String food){
 
-        handler.set_url(BASE_URL+"/"+food);
+        handler.set_url(BASE_URL+"?food="+food);
         JSONObject obj = new JSONObject(handler.getRequestResult());
 
         if(obj == null)
