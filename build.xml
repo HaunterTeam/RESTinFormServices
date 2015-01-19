@@ -7,8 +7,14 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
+<<<<<<< HEAD
 <project name="Director" basedir=".">
     <description>Builds, tests, and runs the project Director.</description>
+=======
+<project name="Director" default="default" basedir=".">
+    <description>Builds, tests, and runs the project Director.</description>
+    <import file="nbproject/build-impl.xml"/>
+>>>>>>> d8218d93f2498dae205f04d681ee1a1b8e780feb
     <!--
 
     There exist several targets which are by default empty and which can be 

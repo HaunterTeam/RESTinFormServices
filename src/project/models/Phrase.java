@@ -53,6 +53,9 @@ public class Phrase implements Serializable {
     
     @Column(name="change")
     private int change;
+    
+    @Column(name="activity")
+    private String activity;
 
     public Phrase() {
     }
@@ -97,6 +100,14 @@ public class Phrase implements Serializable {
         this.change = change;
     }
 
+    public String getActivity() {
+        return activity;
+    }
+
+    public void setActivity(String activity) {
+        this.activity = activity;
+    }
+    
     public static Phrase getPhraseByWeatherAndByBmi(int bmi,int change,int wType) {
         EntityManager em = EhealthDAO.instance.createEntityManager();
         List<Phrase> m = em.createNamedQuery("Phrase.find", Phrase.class)
@@ -104,10 +115,16 @@ public class Phrase implements Serializable {
                 .setParameter("ch", change)
                 .setParameter("bmi", bmi).getResultList();
         EhealthDAO.instance.closeConnections(em);
-        System.err.println(m.size());
+        
         Collections.shuffle(m);
+        
+        System.err.println(m.get(0).activity);
         
         return m.get(0);
     }
-    
+
+    @Override
+    public String toString() {
+        return phrase;
+    }
 }
