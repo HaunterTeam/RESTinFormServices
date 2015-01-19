@@ -118,8 +118,6 @@ public class Phrase implements Serializable {
         
         Collections.shuffle(m);
         
-        System.err.println(m.get(0).activity);
-        
         return m.get(0);
     }
 

@@ -62,6 +62,7 @@ public class PhraseRes {
                 @QueryParam("wt2") int wT2,
                 @QueryParam("wt3") int wT3) {
             
+            
             int change = 0;
             if(bmiold != 0){
                 if(bmi > bmiold)
