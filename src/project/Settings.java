@@ -24,7 +24,7 @@ public final class Settings {
     public static final String FB_QUERY_PHOTO = "/me/picture?type=normal&height=120&width=120&redirect=false&fields=url&access_token=";
     
     // Phrases Service
-    public static final String PH_BASE_URL = "10.196.197.253:";
+    public static final String PH_BASE_URL = "localhost:";
 	public static final String PH_BASE_PORT = "8010";
 	public static final String PH_BASE_PATH = "/phrase-service/phrase";
 	
