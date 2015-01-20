@@ -39,27 +39,6 @@ public class App
 
 
     }
-    //To redesign. This function should serve as one of the processes, it's the first try and it will be moved soon.
-    public static void firstProcess(){
-
-        //[TODO Mirko] add other food
-        List<String> foods = new ArrayList<>(Arrays.asList("pizza", "bacon", "salad","potato","roast","pasta","pasta carbonara","noodles"));
-        Random rmd = new Random();
-
-        String food = foods.get(rmd.nextInt(foods.size() - 1));
-
-        //The process will now start
-
-        FoodService service = new FoodService();
-        Food foodObject = service.getFoodNutritionValues(food);
-
-        FlickrService flickrServices = new FlickrService();
-        Photo photo = flickrServices.getPhotoFromTag(food);
-
-
-
-
-    }
 
     public static ResourceConfig createApp() {
     	System.out.println("Starting SDE assignment REST services..");
