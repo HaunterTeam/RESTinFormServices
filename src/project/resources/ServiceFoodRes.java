@@ -1,9 +1,15 @@
 package project.resources;
 
+import document.ws.People;
+import document.ws.Person;
+import org.json.JSONObject;
+import project.beans.NutritionalInfo;
+import project.businesslogic.BusinessLogicService;
 import project.getflickr.FlickrService;
 import project.getflickr.Photo;
 import project.getfood.Food;
 import project.getfood.FoodService;
+import project.utils.RequestHandler;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -33,20 +39,35 @@ public class ServiceFoodRes {
     @Produces({"application/javascript"})
     public String getFoodSuggestion(@QueryParam("token") String token,@QueryParam("callback") String callback) throws IOException{
 
-        //[TODO Mirko] add other food
-        //initial random food
-        List<String> foods = new ArrayList<>(Arrays.asList("pizza", "bacon", "salad", "potato", "roast", "pasta", "pasta carbonara", "noodles"));
-        Random rmd = new Random();
+        //[TODO Mirko] add authentication
+        
+        //Retrieve the user's information
+        People iPeople = RequestHandler.getInterface();
+        Person p = iPeople.readPerson((long)1);
 
-        String food = foods.get(rmd.nextInt(foods.size() - 1));
+        //calculate bmi and retrieve an appropriate food based on the bmi
+        double bmi = p.getLastBMI();
+        BusinessLogicService bsService = new BusinessLogicService();
+        String food = bsService.getFood(bmi);
 
-        //The process will now start
-
+        //retrieve nutritional values about the suggested food
         FoodService service = new FoodService();
         Food foodObject = service.getFoodNutritionValues(food);
 
+        //Why not even a picture of the food?
         FlickrService flickrServices = new FlickrService();
         Photo photo = flickrServices.getPhotoFromTag(food);
-        return "";
+
+        //Merge everything into a single object
+        NutritionalInfo info = new NutritionalInfo();
+        info.setFoodPhoto(photo);
+        info.setSuggestedFood(foodObject);
+
+        //...and jsonize it!!
+        JSONObject bb = new JSONObject();
+        bb.put("result",info);
+        String ret = callback + "(" + bb.toString() + ")";
+
+        return ret;
     }
 }
