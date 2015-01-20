@@ -25,8 +25,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="currentHealth" type="{http://ws.document/}measure" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="firstname" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
+ *         &lt;element name="lastBMI" type="{http://www.w3.org/2001/XMLSchema}double"/>
  *         &lt;element name="lastname" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="measureHistory" type="{http://ws.document/}measure" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="oldBMI" type="{http://www.w3.org/2001/XMLSchema}double"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -41,8 +43,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "currentHealth",
     "firstname",
     "id",
+    "lastBMI",
     "lastname",
-    "measureHistory"
+    "measureHistory",
+    "oldBMI"
 })
 public class Person {
 
@@ -52,9 +56,11 @@ public class Person {
     protected List<Measure> currentHealth;
     protected String firstname;
     protected Long id;
+    protected double lastBMI;
     protected String lastname;
     @XmlElement(nillable = true)
     protected List<Measure> measureHistory;
+    protected double oldBMI;
 
     /**
      * Gets the value of the birthdate property.
@@ -158,6 +164,22 @@ public class Person {
     }
 
     /**
+     * Gets the value of the lastBMI property.
+     * 
+     */
+    public double getLastBMI() {
+        return lastBMI;
+    }
+
+    /**
+     * Sets the value of the lastBMI property.
+     * 
+     */
+    public void setLastBMI(double value) {
+        this.lastBMI = value;
+    }
+
+    /**
      * Gets the value of the lastname property.
      * 
      * @return
@@ -208,6 +230,22 @@ public class Person {
             measureHistory = new ArrayList<Measure>();
         }
         return this.measureHistory;
+    }
+
+    /**
+     * Gets the value of the oldBMI property.
+     * 
+     */
+    public double getOldBMI() {
+        return oldBMI;
+    }
+
+    /**
+     * Sets the value of the oldBMI property.
+     * 
+     */
+    public void setOldBMI(double value) {
+        this.oldBMI = value;
     }
 
 }

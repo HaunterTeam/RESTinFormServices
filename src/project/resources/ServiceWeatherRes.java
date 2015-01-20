@@ -25,6 +25,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
+
+import document.ws.People;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -38,6 +40,9 @@ import project.getweather.Weather;
 import project.getweather.WeatherService;
 import project.models.Measure;
 import project.models.Phrase;
+import document.ws.Person;
+import document.ws.ReadPerson;
+import project.utils.RequestHandler;
 
 @Path("/weather")
 public class ServiceWeatherRes {
@@ -70,6 +75,7 @@ public class ServiceWeatherRes {
             int w1 = wl.get(0).getType();
             int w2 = wl.get(1).getType();
             int w3 = wl.get(2).getType();
+
             double bmi = Measure.getLastBmi(idface);
             double oldBmi=0;
             
