@@ -1,24 +1,24 @@
 package project.getfood;
 
+import org.eclipse.persistence.oxm.sequenced.Setting;
 import org.json.JSONObject;
 import project.utils.RequestHandler;
-
+import project.Settings;
 /**
  * Created by les on 19/01/15.
  */
 
 public class FoodService {
 
-    public static final String BASE_URL = "http://95.85.59.245:8443/nutritionix/food/";
     private RequestHandler handler;
 
     public FoodService(){
-        handler = new RequestHandler(BASE_URL);
+        handler = new RequestHandler(Settings.FOOD_BASE_URL+Settings.FOOD_BASE_PORT+Settings.FOOD_BASE_PATH);
     }
 
     public Food getFoodNutritionValues(String food){
 
-        handler.set_url(BASE_URL+"?food="+food);
+        handler.set_url(Settings.FOOD_BASE_URL+Settings.FOOD_BASE_PORT+Settings.FOOD_BASE_PATH+"?food="+food);
         JSONObject obj = new JSONObject(handler.getRequestResult());
 
         if(obj == null)

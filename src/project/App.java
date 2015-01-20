@@ -36,12 +36,7 @@ public class App
         System.out.println("Starting HaunterTeam standalone HTTP server..");
         JdkHttpServerFactory.createHttpServer(baseUrl, createApp());
         System.out.println("server starts on " + baseUrl + "\n [kill the process to exit]");        
-        /*PhraseService p = new PhraseService();
-        System.out.println(p.getPhraseS(34, 30, 1, 0, 0));*/
-        //FoodService service = new FoodService();
-        //service.getFoodNutritionValues("pizza");
-        /*FlickrService service = new FlickrService();
-        service.getPhotoFromTag("pizza");*/
+
 
     }
     //To redesign. This function should serve as one of the processes, it's the first try and it will be moved soon.

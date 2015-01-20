@@ -33,4 +33,14 @@ public final class Settings {
 	public static final String CALC_BASE_PORT = "8030";
 	public static final String CALC_BASE_PATH = "/bmicalc-service/bmiutil";
 
+	//Nutritionix Service
+	public static final String FOOD_BASE_URL = "95.85.59.245:";
+	public static final String FOOD_BASE_PORT = "8443";
+	public static final String FOOD_BASE_PATH = "/nutritionix/food/";
+
+	//Flickr Service
+	public static final String FLICKR_BASE_URL = "95.85.59.245:";
+	public static final String FLICKR_BASE_PORT = "9091";
+	public static final String FLICKR_BASE_PATH = "/flickr/";
+
 }
