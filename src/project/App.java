@@ -35,8 +35,8 @@ public class App
         System.out.println(p.getPhraseS(34, 30, 1, 0, 0));*/
         //FoodService service = new FoodService();
         //service.getFoodNutritionValues("pizza");
-        FlickrService service = new FlickrService();
-        service.getPhotoFromTag("pizza");
+        /*FlickrService service = new FlickrService();
+        service.getPhotoFromTag("pizza");*/
 
     }
 

@@ -17,10 +17,10 @@ public class BusinessLogicService {
 	public BmiObj calculateBmiLvlAndChange(double bmi, double old_bmi) throws IOException {
 		
 		String url  = Settings.BASE_PROTOCOL + Settings.CALC_BASE_URL + Settings.CALC_BASE_PORT + Settings.CALC_BASE_PATH;
-        url += "?bmi=" + bmi + "&bmi_old=" + old_bmi;
+        url += "?bmi=" + bmi + "&bmiold=" + old_bmi;
         
+            System.err.println(url);
         URL obj = new URL(url);
-        
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
         con.setRequestMethod(Settings.REQ_TYPE);
@@ -36,10 +36,9 @@ public class BusinessLogicService {
         in.close();
         
         JSONObject o = new JSONObject(response.toString());
-        
         BmiObj bmiobj = new BmiObj();
-        bmiobj.setBmilvl(Integer.parseInt(o.getString("bmilvl")));
-        bmiobj.setChange(Integer.parseInt(o.getString("change")));
+        bmiobj.setBmilvl(o.getInt("bmilvl"));
+        bmiobj.setChange(o.getInt("change"));
 		return bmiobj;
 	}
 }

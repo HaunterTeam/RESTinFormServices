@@ -22,13 +22,12 @@ public class FacebookService {
     
     public FacebookInfo getInfoByToken(String token) throws MalformedURLException, IOException, JSONException {
     	
-    	String url = Settings.FB_BASE_URL + Settings.FB_BASE_PORT + Settings.FB_BASE_PATH + token;
-    	System.err.println(url);
+    	String url = Settings.BASE_PROTOCOL + Settings.FB_BASE_URL + Settings.FB_BASE_PORT + Settings.FB_BASE_PATH + token;
+    	
     	URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
         con.setRequestMethod(Settings.REQ_TYPE);
-        
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuilder response = new StringBuilder();
@@ -36,11 +35,8 @@ public class FacebookService {
                 response.append(inputLine);
         }
         in.close();
-        System.err.println(response.toString());
         
         JSONObject o = new JSONObject(response.toString());
-        System.out.println(o.getString("id"));
-        System.err.println("asddsaasdsda");
         
         FacebookInfo fi = new FacebookInfo();
         String id = o.getString("id");

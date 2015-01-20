@@ -47,6 +47,11 @@ public class ActiWathMerge {
         this.weather = weather;
     }
 
+    @Override
+    public String toString() {
+        return weather.toString()+ activityplan.toString();
+    }
+
     
     
     

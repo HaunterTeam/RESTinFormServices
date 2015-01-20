@@ -9,6 +9,7 @@ package project.resources;
  *
  * @author luca
  */
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -22,9 +23,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import project.beans.ActiWathMerge;
 import project.businesslogic.BmiObj;
@@ -52,10 +54,11 @@ public class ServiceWeatherRes {
 	private EntityManagerFactory entityManagerFactory;
         
 	@GET
-    @Produces({ MediaType.APPLICATION_JSON})
-	public ArrayList<ActiWathMerge> getPhrase(
-                @QueryParam("token") String token) throws IOException {
+    @Produces({"application/javascript"})
+	public /*ArrayList<ActiWathMerge>*/ String getPhrase(
+                @QueryParam("token") String token,@QueryParam("callback") String callback) throws IOException {
             
+            System.err.println(token);
             int idface = 3;
             
             FacebookService fb = new FacebookService();
@@ -63,11 +66,10 @@ public class ServiceWeatherRes {
             
             WeatherService ws = new WeatherService();
 
-            ArrayList<Weather> wl = ws.getWeather("Peio");
+            ArrayList<Weather> wl = ws.getWeather(fi.getLocation());
             int w1 = wl.get(0).getType();
             int w2 = wl.get(1).getType();
             int w3 = wl.get(2).getType();
-            
             double bmi = Measure.getLastBmi(idface);
             double oldBmi=0;
             
@@ -81,6 +83,7 @@ public class ServiceWeatherRes {
             
             PhraseService ps = new PhraseService();
             ArrayList<Phrase> ph = ps.getPhraseS(bmiobj.getBmilvl(), bmiobj.getChange(), w1, w2, w3);
+            System.err.println("after ph");
             
             ArrayList<ActiWathMerge> awm = new ArrayList<>();
             for (int i = 0; i < ph.size(); i++) {
@@ -88,6 +91,13 @@ public class ServiceWeatherRes {
             }
             System.err.println(awm.get(0).getActivityplan().getActivity());
 //            WeatherPlan wp = new WeatherPlan(ph, wl);
-            return awm;
+            System.err.println(awm.toString());
+            
+            /// HOT FIX
+            JSONObject bb = new JSONObject();
+            bb.put("result",awm);
+            String ret = callback + "(" + bb.toString() + ")";
+            System.err.println(ret);
+            return ret;
 	}
 }
