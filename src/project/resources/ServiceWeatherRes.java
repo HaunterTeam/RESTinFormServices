@@ -77,6 +77,13 @@ public class ServiceWeatherRes {
             int w3 = wl.get(2).getType();
 
             double bmi = Measure.getLastBmi(idface);
+            /*
+            This version works with the database connection
+             */
+            /*People iPeople = RequestHandler.getInterface();
+            Person p =  iPeople.readPerson((long)idface);
+            double bmi = p.getLastBMI();*/
+
             double oldBmi=0;
             
             try{
