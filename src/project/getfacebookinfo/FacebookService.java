@@ -24,6 +24,8 @@ public class FacebookService {
     	
     	String url = Settings.BASE_PROTOCOL + Settings.FB_BASE_URL + Settings.FB_BASE_PORT + Settings.FB_BASE_PATH + token;
     	
+    	System.out.println("URL: " + url);
+    	
     	URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 

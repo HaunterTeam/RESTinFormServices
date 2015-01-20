@@ -10,10 +10,7 @@ public class Food {
     private float calories;
     private float fat;
 
-    public Food()
-    {}
-
-
+    public Food() {}
 
     public float getCalories() {
         return calories;

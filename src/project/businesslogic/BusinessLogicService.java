@@ -16,22 +16,21 @@ import project.Settings;
 
 public class BusinessLogicService {
 
-    public BusinessLogicService() {
-    }
+    public BusinessLogicService() { }
 
     public BmiObj calculateBmiLvlAndChange(double bmi, double old_bmi) throws IOException {
 
-        String url = Settings.BASE_PROTOCOL + Settings.CALC_BASE_URL + Settings.CALC_BASE_PORT + Settings.CALC_BASE_PATH;
-        url += "?bmi=" + bmi + "&bmiold=" + old_bmi;
+        String url = "";
+        url += Settings.BASE_PROTOCOL + Settings.CALC_BASE_URL + Settings.CALC_BASE_PORT + Settings.CALC_BASE_PATH;
+        url += "?" + Settings.CALC_PARAM_BMI + "=" + bmi + "&" + Settings.CALC_PARAM_OLDBMI + "=" + old_bmi;
+        
+        System.out.println("URL: " + url);
 
-        System.err.println(url);
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
         con.setRequestMethod(Settings.REQ_TYPE);
 
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuilder response = new StringBuilder();
 
@@ -64,6 +63,5 @@ public class BusinessLogicService {
 
         Random rmd = new Random();
         return dieteticFoods.get(rmd.nextInt(list.size() - 1));
-
     }
 }

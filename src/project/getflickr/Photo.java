@@ -8,8 +8,7 @@ public class Photo {
     private String description;
     private String title;
 
-    public Photo() {
-    }
+    public Photo() { }
 
     public String getUrl() {
         return url;

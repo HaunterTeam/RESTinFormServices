@@ -5,6 +5,8 @@ public class BmiObj {
 	private int bmilvl;
 	private int change;
 	
+	public BmiObj() { }
+	
 	public int getBmilvl() {
 		return bmilvl;
 	}
@@ -19,9 +21,5 @@ public class BmiObj {
 
 	public void setChange(int change) {
 		this.change = change;
-	}
-
-	public BmiObj() {
-		
 	}
 }

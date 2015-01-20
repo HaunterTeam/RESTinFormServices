@@ -76,6 +76,4 @@ public class Weather {
             return WEATHER_BAD;
         }
     }
-    
-    
 }

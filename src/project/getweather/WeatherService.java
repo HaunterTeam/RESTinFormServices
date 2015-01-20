@@ -12,9 +12,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import project.Settings;
 
 /**
  *
@@ -25,8 +28,6 @@ public class WeatherService {
     public static final String BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?q=";
     public static final String PARAM = "&units=metric&cnt=";
     
-    public static final String REQ_TYPE = "GET";
-    
     public static final int BASE_DAY = 3;
     
     public static final String JSON_LIST = "list";
@@ -35,7 +36,7 @@ public class WeatherService {
     public static final String JSON_TEMPERATURE_AVERAGE = "eve";
     public static final String JSON_MAIN_WEATHER = "main";
 
-    public WeatherService() {}
+    public WeatherService() { }
     
     public ArrayList<Weather> getWeather(String location) throws MalformedURLException, IOException, JSONException{
         return getWeather(location,BASE_DAY);
@@ -45,12 +46,11 @@ public class WeatherService {
         
         String url  = BASE_URL + location + PARAM + days;
         
+        System.out.println("URL: " + url);
+        
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-        con.setRequestMethod(REQ_TYPE);
-        
-        int responseCode = con.getResponseCode();
+        con.setRequestMethod(Settings.REQ_TYPE);
         
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
@@ -65,7 +65,7 @@ public class WeatherService {
         JSONObject o = new JSONObject(response.toString());
         JSONArray ja = o.getJSONArray(JSON_LIST);
         
-        ArrayList<Weather> listWeather = new ArrayList();
+        ArrayList<Weather> listWeather = new ArrayList<Weather>();
         for (int i = 0; i < ja.length(); i++) {
             JSONObject weather = ja.getJSONObject(i);
             
@@ -78,8 +78,6 @@ public class WeatherService {
             
             listWeather.add(new Weather(location, tempAverage, weatLoc));
         }
-        
         return listWeather;
     }
-    
 }

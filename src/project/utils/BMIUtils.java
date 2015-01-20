@@ -22,29 +22,26 @@ public class BMIUtils {
     public static final double LVL_2_HIGH_TH = 24.9;
     public static final double LVL_3_HIGH_TH = 29.9;
     
-    public static int getLevel(double weight,double height){
+    public static int getLevel(double weight, double height){
         
-        double BMI;
-                
-        try{
-            BMI = weight / (height*height);
-        }catch(ArithmeticException e){
+        double bmi;
+        try {
+            bmi = weight / (height*height);
+        } catch(ArithmeticException e) {
             return ERROR;
-}
-        
-        return getLevelByBmi(BMI);
-        
+        }
+        return getLevelByBmi(bmi);
     }
     
-    public static int getLevelByBmi(double BMI){
+    public static int getLevelByBmi(double bmi){
         
-        if(BMI < LVL_1_HIGH_TH){
+        if(bmi < LVL_1_HIGH_TH){
             return UNDER_WEIGHT;
-        }else if(BMI < LVL_2_HIGH_TH){
+        }else if(bmi < LVL_2_HIGH_TH){
             return NORMAL_WEIGHT;
-        }else if(BMI < LVL_3_HIGH_TH){
+        }else if(bmi < LVL_3_HIGH_TH){
             return OVER_WEIGHT;
-        }else if(BMI > LVL_3_HIGH_TH){
+        }else if(bmi > LVL_3_HIGH_TH){
             return OBESE;
         }
         return ERROR;

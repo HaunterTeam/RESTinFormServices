@@ -5,10 +5,11 @@
  */
 package project.beans;
 
-import project.getweather.Weather;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import project.getweather.Weather;
 import project.models.Phrase;
 
 /**
@@ -28,8 +29,7 @@ public class ActiWathMerge {
         this.weather = w;
     }
 
-    public ActiWathMerge() {
-    }
+    public ActiWathMerge() { }
 
     public Phrase getActivityplan() {
         return activityplan;
@@ -51,9 +51,4 @@ public class ActiWathMerge {
     public String toString() {
         return weather.toString()+ activityplan.toString();
     }
-
-    
-    
-    
-    
 }

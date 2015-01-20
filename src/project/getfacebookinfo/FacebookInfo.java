@@ -6,9 +6,7 @@ public class FacebookInfo {
 	private String first_name;
 	private String location;
 
-	public FacebookInfo() {
-		
-	}
+	public FacebookInfo() { }
 
 	public String getId() {
 		return id;

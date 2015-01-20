@@ -32,13 +32,18 @@ public class PhraseService {
     
     public ArrayList<Phrase> getPhraseS(int bmilvl, int change,int w1,int w2,int w3) throws MalformedURLException, IOException, JSONException{
         
-        String url  = Settings.BASE_PROTOCOL + Settings.PH_BASE_URL + Settings.PH_BASE_PORT + Settings.PH_BASE_PATH;
-        url += "?bmilvl=" + bmilvl + "&change=" + change + "&wt1=" + w1 + "&wt2=" + w2 + "&wt3=" + w3;
+        String url = "";
+        url += Settings.BASE_PROTOCOL + Settings.PH_BASE_URL + Settings.PH_BASE_PORT + Settings.PH_BASE_PATH;
+        url += "?" + Settings.PH_PARAM_BMI_LEVEL + "=" + bmilvl;
+        url += "&" + Settings.PH_PARAM_CHANGE + "=" + change;
+        url += "&" + Settings.PH_PARAM_WEATHER_TYPE_1 + "=" + w1;
+        url += "&" + Settings.PH_PARAM_WEATHER_TYPE_2 + "=" + w2;
+        url += "&" + Settings.PH_PARAM_WEATHER_TYPE_3 + "=" + w3;
+        
+        System.out.println("URL: " + url);
         
         URL obj = new URL(url);
-        System.err.println(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
         con.setRequestMethod(REQ_TYPE);
         
         BufferedReader in = new BufferedReader(
@@ -64,8 +69,6 @@ public class PhraseService {
             p.setActivity(o.getString("activity"));
             retPhs.add(p);
         }
-        
         return retPhs;
     }
-    
 }

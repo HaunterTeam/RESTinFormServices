@@ -6,8 +6,8 @@
 package project.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+
 import project.dao.EhealthDAO;
 
 /**
@@ -54,8 +55,7 @@ public class Measure implements Serializable {
     @Column(name="times")
     private String times;
 
-    public Measure() {
-    }
+    public Measure() { }
 
     public int getIdmeasure() {
         return idmeasure;
@@ -97,7 +97,6 @@ public class Measure implements Serializable {
         this.times = times;
     }
 
-    
     public static double getLastBmi(int idface) {
         Measure ret;
         EntityManager em = EhealthDAO.instance.createEntityManager();
@@ -121,5 +120,4 @@ public class Measure implements Serializable {
         
         return ret.weight / (ret.height*ret.height);
     }
-    
 }

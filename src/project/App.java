@@ -1,25 +1,12 @@
 package project;
 
-import document.ws.People;
-import document.ws.Person;
-import project.getflickr.FlickrService;
-import project.getflickr.Photo;
-import project.getfood.Food;
-import project.getfood.FoodService;
-import project.getphrase.PhraseService;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import project.utils.RequestHandler;
 
 public class App
 {
@@ -42,7 +29,7 @@ public class App
     }
 
     public static ResourceConfig createApp() {
-    	System.out.println("Starting SDE assignment REST services..");
+    	System.out.println("Starting Process Centric REST service..");
         return new MyApplicationConfig();
     }
 }

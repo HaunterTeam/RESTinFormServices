@@ -9,7 +9,6 @@ package project.resources;
  *
  * @author luca
  */
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -26,8 +25,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
-import document.ws.People;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import project.beans.ActiWathMerge;
@@ -40,9 +37,6 @@ import project.getweather.Weather;
 import project.getweather.WeatherService;
 import project.models.Measure;
 import project.models.Phrase;
-import document.ws.Person;
-import document.ws.ReadPerson;
-import project.utils.RequestHandler;
 
 @Path("/weather")
 public class ServiceWeatherRes {

@@ -5,11 +5,13 @@
  */
 package project.beans;
 
-import project.getweather.Weather;
 import java.util.ArrayList;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import project.getweather.Weather;
 import project.models.Phrase;
 
 /**
@@ -28,8 +30,7 @@ public class WeatherPlan {
         this.weather = weather;
     }
 
-    public WeatherPlan() {
-    }
+    public WeatherPlan() { }
 
     public ArrayList<Phrase> getPhrase() {
         return phrase;
@@ -46,7 +47,4 @@ public class WeatherPlan {
     public void setWeather(ArrayList<Weather> weather) {
         this.weather = weather;
     }
-    
-    
-    
 }

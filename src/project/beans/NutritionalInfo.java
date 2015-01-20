@@ -1,11 +1,11 @@
 package project.beans;
 
-import project.getflickr.Photo;
-import project.getfood.Food;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import project.getflickr.Photo;
+import project.getfood.Food;
 
 /**
  * Created by les on 20/01/15.
@@ -17,9 +17,7 @@ public class NutritionalInfo {
     private Food suggestedFood;
     private Photo foodPhoto;
 
-    public NutritionalInfo(){
-
-    }
+    public NutritionalInfo(){ }
 
     public Food getSuggestedFood() {
         return suggestedFood;
