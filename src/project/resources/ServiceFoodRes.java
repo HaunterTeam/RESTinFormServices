@@ -1,5 +1,9 @@
 package project.resources;
 
+import project.businesslogic.BmiObj;
+import project.businesslogic.BusinessLogicService;
+import project.getfacebookinfo.FacebookInfo;
+import project.getfacebookinfo.FacebookService;
 import project.getflickr.FlickrService;
 import project.getflickr.Photo;
 import project.getfood.Food;
@@ -12,6 +16,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,8 +36,24 @@ public class ServiceFoodRes {
 
     @GET
     @Produces({"application/javascript"})
-    public String getFoodSuggestion(@QueryParam("token") String token,@QueryParam("callback") String callback) throws IOException{
+	public /*ArrayList<ActiWathMerge>*/ String getPhrase(
+                @QueryParam("token") String token, @QueryParam("callback") String callback) throws IOException {
+            
+        FacebookService fb = new FacebookService();
+        FacebookInfo fi = fb.getInfoByToken(token);
 
+        double bmi = 3;
+        double oldBmi = 3;
+            
+         // BL
+        BusinessLogicService bl = new BusinessLogicService();
+        BmiObj bmiobj = bl.calculateBmiLvlAndChange(bmi, oldBmi);
+        
+        
+            
+            
+    	
+    	
         //[TODO Mirko] add other food
         //initial random food
         List<String> foods = new ArrayList<>(Arrays.asList("pizza", "bacon", "salad", "potato", "roast", "pasta", "pasta carbonara", "noodles"));

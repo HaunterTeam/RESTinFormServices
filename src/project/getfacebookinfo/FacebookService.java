@@ -47,32 +47,4 @@ public class FacebookService {
         fi.setLocation(location);
         return fi;
     }
-    
-//    public JSONObject getProfileImageByToken(String token) throws MalformedURLException, IOException, JSONException {
-//    	
-//    	String url = BASE_URL + FB_API_VERSION + FB_QUERY_PHOTO + token;
-//    	
-//    	URL obj = new URL(url);
-//        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-//
-//        con.setRequestMethod(REQ_TYPE);
-//        
-//        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-//        String inputLine;
-//        StringBuilder response = new StringBuilder();
-//
-//        while ((inputLine = in.readLine()) != null) {
-//                response.append(inputLine);
-//        }
-//        in.close();
-//        
-//        JSONObject jo = new JSONObject(response.toString());
-//        JSONObject data = jo.getJSONObject("data");
-////        return data.getString("url");
-//        
-//        JSONObject o = new JSONObject();
-//        o.put("image_url", data.getString("url"));
-//        return o;
-//    }
-	
 }
