@@ -1,5 +1,7 @@
 package project;
 
+import document.ws.People;
+import document.ws.Person;
 import project.getflickr.FlickrService;
 import project.getflickr.Photo;
 import project.getfood.Food;
@@ -17,6 +19,7 @@ import java.util.Random;
 
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
+import project.utils.RequestHandler;
 
 public class App
 {
@@ -35,9 +38,7 @@ public class App
         URI baseUrl = new URI(protocol + "localhost" + port + path);
         System.out.println("Starting HaunterTeam standalone HTTP server..");
         JdkHttpServerFactory.createHttpServer(baseUrl, createApp());
-        System.out.println("server starts on " + baseUrl + "\n [kill the process to exit]");        
-
-
+        System.out.println("server starts on " + baseUrl + "\n [kill the process to exit]");
     }
 
     public static ResourceConfig createApp() {

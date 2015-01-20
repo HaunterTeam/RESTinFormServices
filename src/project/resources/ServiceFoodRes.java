@@ -1,13 +1,7 @@
 package project.resources;
 
-import project.businesslogic.BmiObj;
-import project.businesslogic.BusinessLogicService;
-import project.getfacebookinfo.FacebookInfo;
-import project.getfacebookinfo.FacebookService;
-import project.getflickr.FlickrService;
-import project.getflickr.Photo;
-import project.getfood.Food;
-import project.getfood.FoodService;
+
+import java.io.IOException;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -17,11 +11,19 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import org.json.JSONObject;
+
+import project.beans.NutritionalInfo;
+import project.businesslogic.BusinessLogicService;
+import project.getfacebookinfo.FacebookInfo;
+import project.getfacebookinfo.FacebookService;
+import project.getflickr.FlickrService;
+import project.getflickr.Photo;
+import project.getfood.Food;
+import project.getfood.FoodService;
+import project.utils.RequestHandler;
+import document.ws.People;
+import document.ws.Person;
 
 /**
  * Created by les on 20/01/15.
@@ -39,35 +41,36 @@ public class ServiceFoodRes {
 	public /*ArrayList<ActiWathMerge>*/ String getPhrase(
                 @QueryParam("token") String token, @QueryParam("callback") String callback) throws IOException {
             
-        FacebookService fb = new FacebookService();
-        FacebookInfo fi = fb.getInfoByToken(token);
-
-        double bmi = 3;
-        double oldBmi = 3;
-            
-         // BL
-        BusinessLogicService bl = new BusinessLogicService();
-        BmiObj bmiobj = bl.calculateBmiLvlAndChange(bmi, oldBmi);
+    	// Retrieve the user's id from Facebook
+        FacebookService fs = new FacebookService();
+        FacebookInfo fi = fs.getInfoByToken(token);
         
-        
-            
-            
-    	
-    	
-        //[TODO Mirko] add other food
-        //initial random food
-        List<String> foods = new ArrayList<>(Arrays.asList("pizza", "bacon", "salad", "potato", "roast", "pasta", "pasta carbonara", "noodles"));
-        Random rmd = new Random();
+        //Retrieve the user's information
+        People iPeople = RequestHandler.getInterface();
+        Person p = iPeople.readPerson((long)1);
 
-        String food = foods.get(rmd.nextInt(foods.size() - 1));
+        //calculate bmi and retrieve an appropriate food based on the bmi
+        double bmi = p.getLastBMI();
+        BusinessLogicService bsService = new BusinessLogicService();
+        String food = bsService.getFood(bmi);
 
-        //The process will now start
-
+        //retrieve nutritional values about the suggested food
         FoodService service = new FoodService();
         Food foodObject = service.getFoodNutritionValues(food);
 
+        //Why not even a picture of the food?
         FlickrService flickrServices = new FlickrService();
         Photo photo = flickrServices.getPhotoFromTag(food);
-        return "";
+
+        //Merge everything into a single object
+        NutritionalInfo info = new NutritionalInfo();
+        info.setFoodPhoto(photo);
+        info.setSuggestedFood(foodObject);
+
+        //...and jsonize it!!
+        JSONObject bb = new JSONObject();
+        bb.put("result",info);
+        String ret = callback + "(" + bb.toString() + ")";
+        return ret;
     }
 }
