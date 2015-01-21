@@ -61,12 +61,12 @@ public class PhraseService {
         for (int i = 0; i < phs.length(); i++) {
             JSONObject o = phs.getJSONObject(i);
             Phrase p = new Phrase();
-            p.setIdphrase(o.getInt("idphrase"));
-            p.setPhrase(o.getString("phrase"));
-            p.setWeathertype(o.getInt("weathertype"));
-            p.setBmirange(o.getInt("bmirange"));
-            p.setChange(o.getInt("change"));
-            p.setActivity(o.getString("activity"));
+            p.setIdphrase(o.getInt(Settings.PH_JSON_ID_PHRASE));
+            p.setPhrase(o.getString(Settings.PH_JSON_PHRASE));
+            p.setWeathertype(o.getInt(Settings.PH_JSON_WEATHER_TYPE));
+            p.setBmirange(o.getInt(Settings.PH_JSON_BMIRANGE));
+            p.setChange(o.getInt(Settings.PH_JSON_CHANGE));
+            p.setActivity(o.getString(Settings.PH_JSON_ACTIVITY));
             retPhs.add(p);
         }
         return retPhs;

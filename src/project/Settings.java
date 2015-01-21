@@ -1,13 +1,11 @@
 package project;
 
 public final class Settings {
-	
-	// Common Settings
-	public static final String REQ_TYPE = "GET";
-	public static final String BASE_PROTOCOL = "http://";
-	
-	// ##############
-	// ## SERVICES ##
+
+    // Common Settings
+    public static final String REQ_TYPE = "GET";
+    public static final String BASE_PROTOCOL = "http://";
+
 	// ##############
 	
 	// Director Service
