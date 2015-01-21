@@ -48,9 +48,9 @@ public class BusinessLogicService {
 
     public String getFood(double bmi) {
 
-        List<String> dieteticFoods = new ArrayList<>(Arrays.asList("salmon", "broccoli", "salad", "tomato", "berries", "beans", "soup", "eggs", "yougurt", "grapefruit", "apple"));
-        List<String> normalFood = new ArrayList<>(Arrays.asList("pizza", "bacon", "salad", "potato", "roast", "pasta", "pasta carbonara", "noodles","sausage","burger"));
-        List<String> fatFood = new ArrayList<>(Arrays.asList("fries", "crispy", "mcdonald", "burger king", "cheese", "ice cream", "chicken burger", "chicken","sausage","burger"));
+        List<String> dieteticFoods = new ArrayList<String>(Arrays.asList("salmon", "broccoli", "salad", "tomato", "berries", "beans", "soup", "eggs", "yougurt", "grapefruit", "apple"));
+        List<String> normalFood = new ArrayList<String>(Arrays.asList("pizza", "bacon", "salad", "potato", "roast", "pasta", "pasta carbonara", "noodles","sausage","burger"));
+        List<String> fatFood = new ArrayList<String>(Arrays.asList("fries", "crispy", "mcdonald", "burger king", "cheese", "ice cream", "chicken burger", "chicken","sausage","burger"));
 
         List<String> list = null;
 

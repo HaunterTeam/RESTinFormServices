@@ -92,7 +92,7 @@ public class ServiceWeatherRes {
             ArrayList<Phrase> ph = ps.getPhraseS(bmiobj.getBmilvl(), bmiobj.getChange(), w1, w2, w3);
             System.err.println("after ph");
             
-            ArrayList<ActiWathMerge> awm = new ArrayList<>();
+            ArrayList<ActiWathMerge> awm = new ArrayList<ActiWathMerge>();
             for (int i = 0; i < ph.size(); i++) {
                 awm.add(new ActiWathMerge(ph.get(i), wl.get(i)));
             }

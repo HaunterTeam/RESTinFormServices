@@ -5,8 +5,6 @@ public final class Settings {
     // Common Settings
     public static final String REQ_TYPE = "GET";
     public static final String BASE_PROTOCOL = "http://";
-
-	// ##############
 	
 	// Director Service
 	public static final String LOCAL_BASE_URL = "localhost:";
@@ -40,6 +38,13 @@ public final class Settings {
 	public static final String PH_PARAM_WEATHER_TYPE_1 = "wt1";
 	public static final String PH_PARAM_WEATHER_TYPE_2 = "wt2";
 	public static final String PH_PARAM_WEATHER_TYPE_3 = "wt3";
+
+	public static final String PH_JSON_ID_PHRASE = "idphrase";
+    public static final String PH_JSON_PHRASE = "phrase";
+    public static final String PH_JSON_WEATHER_TYPE = "weathertype";
+    public static final String PH_JSON_BMIRANGE = "bmirange";
+    public static final String PH_JSON_CHANGE = "change";
+    public static final String PH_JSON_ACTIVITY = "activity";
 	
     // BmiCalc Service
     public static final String LOCAL_CALC_BASE_URL = "localhost:";
