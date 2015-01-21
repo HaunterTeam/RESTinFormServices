@@ -11,7 +11,7 @@ public final class Settings {
 	public static final String LOCAL_BASE_PORT = "9091";
 	public static final String LOCAL_BASE_PATH = "/project-director/";
 
-	public static final String BASE_URL = "restindirectorservice";
+	public static final String BASE_URL = "restindirectorservice.herokuapp.com";
 	public static final String BASE_PORT = "9091";
 	public static final String BASE_PATH = "/project-director/";
 	
@@ -20,7 +20,7 @@ public final class Settings {
 	public static final String LOCAL_FB_BASE_PORT = "8020";
 	public static final String LOCAL_FB_BASE_PATH = "/project-facebook/auth?token=";
 
-	public static final String FB_BASE_URL = "restinfacebookservice";
+	public static final String FB_BASE_URL = "restinfacebookservice.herokuapp.com";
 	public static final String FB_BASE_PORT = "";
 	public static final String FB_BASE_PATH = "/project-facebook/auth?token=";
     
@@ -29,7 +29,7 @@ public final class Settings {
 	public static final String LOCAL_PH_BASE_PORT = "8010";
 	public static final String LOCAL_PH_BASE_PATH = "/phrase-service/phrase";
 
-	public static final String PH_BASE_URL = "restinphraseservice";
+	public static final String PH_BASE_URL = "restinphraseservice.herokuapp.com";
 	public static final String PH_BASE_PORT = "";
 	public static final String PH_BASE_PATH = "/phrase-service/phrase";
 	
@@ -51,7 +51,7 @@ public final class Settings {
 	public static final String LOCAL_CALC_BASE_PORT = "8030";
 	public static final String LOCAL_CALC_BASE_PATH = "/bmicalc-service/bmiutil";
 
-    public static final String CALC_BASE_URL = "bmicalculatorservice";
+    public static final String CALC_BASE_URL = "bmicalculatorservice.herokuapp.com";
 	public static final String CALC_BASE_PORT = "";
 	public static final String CALC_BASE_PATH = "/bmicalc-service/bmiutil";
 
