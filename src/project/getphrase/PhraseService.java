@@ -56,7 +56,7 @@ public class PhraseService {
         }
         in.close();
         
-        ArrayList<Phrase> retPhs = new ArrayList<>();
+        ArrayList<Phrase> retPhs = new ArrayList<Phrase>();
         JSONArray phs = new JSONArray(response.toString());
         for (int i = 0; i < phs.length(); i++) {
             JSONObject o = phs.getJSONObject(i);
