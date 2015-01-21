@@ -13,23 +13,25 @@ public class App
     public static void main(String[] args) throws IllegalArgumentException, IOException, URISyntaxException
     {    	
     	String protocol = Settings.BASE_PROTOCOL;
-        String port = ":" + Settings.BASE_PORT;
+        String port = System.getenv("PORT");
+        if (port == null || port.isEmpty()) {
+            port = Settings.BASE_PORT;
+        }
         String hostname = InetAddress.getLocalHost().getHostAddress();
-        String path = Settings.BASE_PATH;
+        String path = Settings.SERVICE_PATH;
         if (hostname.equals(Settings.BASE_URL))
         {
             hostname = "localhost";
         }
 
-        //URI baseUrl = new URI(protocol + hostname + port + path); deploy version
-        URI baseUrl = new URI(protocol + "localhost" + port + path);
-        System.out.println("Starting HaunterTeam standalone HTTP server..");
+        URI baseUrl = new URI(protocol + hostname + ":" + port + path);
+        System.out.println("Starting standalone HTTP server..");
         JdkHttpServerFactory.createHttpServer(baseUrl, createApp());
         System.out.println("server starts on " + baseUrl + "\n [kill the process to exit]");
     }
 
     public static ResourceConfig createApp() {
-    	System.out.println("Starting Process Centric REST service..");
+    	System.out.println("Starting Process Centric service..");
         return new MyApplicationConfig();
     }
 }
