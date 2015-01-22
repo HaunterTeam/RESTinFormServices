@@ -27,6 +27,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.json.JSONObject;
 
+import project.Settings;
 import project.beans.ActiWathMerge;
 import project.businesslogic.BmiObj;
 import project.businesslogic.BusinessLogicService;
@@ -64,9 +65,9 @@ public class ServiceWeatherRes {
 			// If everything goes right, code = 200 and message = "Valid Request" 
 			JSONObject result_json = new JSONObject();
         	JSONObject status_json = new JSONObject();
-        	status_json.put("code", 200);
-        	status_json.put("message", "Valid Request");
-        	result_json.put("status", status_json);
+        	status_json.put(Settings.FB_JSON_OUT_STATUS_CODE_ATTR, Settings.FB_OK_REQ);
+        	status_json.put(Settings.FB_JSON_OUT_STATUS_MESSAGE_ATTR, Settings.FB_OK_MESSAGE);
+        	result_json.put(Settings.FB_JSON_OUT_STATUS_OBJ, status_json);
 			
             System.err.println("Token:" + token);
             
@@ -77,8 +78,10 @@ public class ServiceWeatherRes {
             	fi = fb.getInfoByToken(token);
             } catch(FacebookErrorException fb_excep) {
             	System.err.println("Exception raised in FacebookService: " + fb_excep.getCode() + ", " + fb_excep.getMessage());
-            	result_json.getJSONObject("status").put("code", fb_excep.getCode());
-            	result_json.getJSONObject("status").put("message", fb_excep.getMessage());
+            	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+            		.put(Settings.FB_JSON_OUT_STATUS_CODE_ATTR, fb_excep.getCode());
+            	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+            		.put(Settings.FB_JSON_OUT_STATUS_MESSAGE_ATTR, fb_excep.getMessage());
             	System.err.println(result_json.toString());
             	return callback + "(" + result_json.toString() + ")";
             }
@@ -94,9 +97,11 @@ public class ServiceWeatherRes {
                 w2 = wl.get(1).getType();
                 w3 = wl.get(2).getType();
             } catch(Exception general_excep) {
-            	System.err.println("Exception raised in WeatherService: " + 1 + ", " + general_excep.getMessage());
-            	result_json.getJSONObject("status").put("code", 1);
-            	result_json.getJSONObject("status").put("message", general_excep.getMessage());
+            	System.err.println("Exception raised in WeatherService: " + Settings.FB_ERR_REQ + ", " + general_excep.getMessage());
+            	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+            		.put(Settings.FB_JSON_OUT_STATUS_CODE_ATTR, Settings.FB_ERR_REQ);
+            	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+            		.put(Settings.FB_JSON_OUT_STATUS_MESSAGE_ATTR, general_excep.getMessage());
             	System.err.println(result_json.toString());
             	return callback + "(" + result_json.toString() + ")";
             }
@@ -118,9 +123,11 @@ public class ServiceWeatherRes {
                 bmi = p.getLastBMI();
                 bmiold = p.getOldBMI();
             } catch (Exception general_excep) {
-            	System.err.println("Exception raised in iPeople.readPerson(): " + 1 + ", " + general_excep.getMessage());
-            	result_json.getJSONObject("status").put("code", 1);
-            	result_json.getJSONObject("status").put("message", general_excep.getMessage());
+            	System.err.println("Exception raised in iPeople.readPerson(): " + Settings.FB_ERR_REQ + ", " + general_excep.getMessage());
+            	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+            		.put(Settings.FB_JSON_OUT_STATUS_CODE_ATTR, Settings.FB_ERR_REQ);
+            	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+            		.put(Settings.FB_JSON_OUT_STATUS_MESSAGE_ATTR, general_excep.getMessage());
             	System.err.println(result_json.toString());
             	return callback + "(" + result_json.toString() + ")";
             }
@@ -131,9 +138,11 @@ public class ServiceWeatherRes {
             try {
             	bmiobj = bl.calculateBmiLvlAndChange(bmi, bmiold);
             } catch (Exception general_excep) {
-            	System.err.println("Exception raised in bl.calculateBmiLvlAndChange(): " + 1 + ", " + general_excep.getMessage());
-            	result_json.getJSONObject("status").put("code", 1);
-            	result_json.getJSONObject("status").put("message", general_excep.getMessage());
+            	System.err.println("Exception raised in bl.calculateBmiLvlAndChange(): " + Settings.FB_ERR_REQ + ", " + general_excep.getMessage());
+            	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+            		.put(Settings.FB_JSON_OUT_STATUS_CODE_ATTR, Settings.FB_ERR_REQ);
+            	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+            		.put(Settings.FB_JSON_OUT_STATUS_MESSAGE_ATTR, general_excep.getMessage());
             	System.err.println(result_json.toString());
             	return callback + "(" + result_json.toString() + ")";
             }
@@ -144,9 +153,11 @@ public class ServiceWeatherRes {
             try {
             	ps.getPhraseS(bmiobj.getBmilvl(), bmiobj.getChange(), w1, w2, w3);
             } catch (Exception general_excep) {
-            	System.err.println("Exception raised in bl.calculateBmiLvlAndChange(): " + 1 + ", " + general_excep.getMessage());
-            	result_json.getJSONObject("status").put("code", 1);
-            	result_json.getJSONObject("status").put("message", general_excep.getMessage());
+            	System.err.println("Exception raised in bl.calculateBmiLvlAndChange(): " + Settings.FB_ERR_REQ + ", " + general_excep.getMessage());
+            	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+            		.put(Settings.FB_JSON_OUT_STATUS_CODE_ATTR, Settings.FB_ERR_REQ);
+            	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+            		.put(Settings.FB_JSON_OUT_STATUS_MESSAGE_ATTR, general_excep.getMessage());
             	System.err.println(result_json.toString());
             	return callback + "(" + result_json.toString() + ")";
             }
@@ -161,7 +172,7 @@ public class ServiceWeatherRes {
             System.err.println(awm.toString());
             
             // Everything goes right!!
-            result_json.put("result", awm);
+            result_json.put(Settings.FB_JSON_OUT_RESULT_OBJ, awm);
             return callback + "(" + result_json.toString() + ")";
 	}
 }

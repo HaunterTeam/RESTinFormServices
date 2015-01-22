@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import project.Settings;
@@ -23,36 +24,47 @@ public class FacebookService {
     	
     	String url = Settings.BASE_PROTOCOL + Settings.FB_BASE_URL + Settings.FB_BASE_PORT + Settings.FB_BASE_PATH + token;
     	
-    	System.out.println("URL: " + url);
-    	
-    	URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+    	FacebookInfo fi = new FacebookInfo();
+        
+        try {
+        	
+        	System.out.println("Request:" + url);
+        	URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-        con.setRequestMethod(Settings.REQ_TYPE);
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder response = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+            con.setRequestMethod(Settings.REQ_TYPE);
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+            }
+            in.close();
+            
+            JSONObject fb_serv_response = new JSONObject(response.toString());
+            
+            int code = fb_serv_response.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ).getInt(Settings.FB_JSON_OUT_STATUS_CODE_ATTR);
+            String message = fb_serv_response.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ).getString(Settings.FB_JSON_OUT_STATUS_MESSAGE_ATTR);
+            
+            if(code == Settings.FB_OK_REQ) {
+            	Long id = fb_serv_response.getLong(Settings.FB_JSON_OUT_ID_ATTR);
+                String first_name = fb_serv_response.getString(Settings.FB_JSON_OUT_NAME_ATTR);
+                String location = fb_serv_response.getString(Settings.FB_JSON_OUT_LOCATION_ATTR);
+                fi.setId(id);
+                fi.setFirst_name(first_name);
+                fi.setLocation(location);
+            }
+            else {
+            	throw new FacebookErrorException(Settings.FB_ERR_REQ, message);
+            }
+	       
+        } catch (Exception excep) {
+        	
+        	System.err.println("Exception catched, " + excep.toString());
+        	throw new FacebookErrorException(Settings.FB_ERR_REQ, Settings.FB_ERR_MESSAGE);
+        	
         }
-        in.close();
         
-        FacebookInfo fi = new FacebookInfo();
-        JSONObject o = new JSONObject(response.toString());
-        
-        int code = o.getJSONObject("status").getInt("code");
-        String message = o.getJSONObject("status").getString("message");
-        
-        if(code == 200) {
-        	Long id = o.getLong("id");
-            String first_name = o.getString("first_name");
-            String location = o.getString("location");
-            fi.setId(id);
-            fi.setFirst_name(first_name);
-            fi.setLocation(location);
-        } else {
-        	throw new FacebookErrorException(code, message);
-        }
         return fi;
     }
 }

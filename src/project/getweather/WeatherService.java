@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -44,7 +45,7 @@ public class WeatherService {
     
     public ArrayList<Weather> getWeather(String location,int days) throws MalformedURLException, IOException, JSONException{
         
-        String url  = BASE_URL + location + PARAM + days;
+        String url  = BASE_URL + URLEncoder.encode(location, "UTF-8") + PARAM + days;
         
         System.out.println("URL: " + url);
         
