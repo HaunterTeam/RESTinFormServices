@@ -2,17 +2,17 @@ package project.getfacebookinfo;
 
 public class FacebookInfo {
 	
-	private String id;
+	private Long id;
 	private String first_name;
 	private String location;
 
 	public FacebookInfo() { }
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

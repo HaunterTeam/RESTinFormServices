@@ -7,7 +7,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import project.Settings;
@@ -20,7 +19,7 @@ public class FacebookService {
 
     public FacebookService() { }
     
-    public FacebookInfo getInfoByToken(String token) throws MalformedURLException, IOException, JSONException {
+    public FacebookInfo getInfoByToken(String token) throws MalformedURLException, IOException, FacebookErrorException {
     	
     	String url = Settings.BASE_PROTOCOL + Settings.FB_BASE_URL + Settings.FB_BASE_PORT + Settings.FB_BASE_PATH + token;
     	
@@ -38,15 +37,22 @@ public class FacebookService {
         }
         in.close();
         
+        FacebookInfo fi = new FacebookInfo();
         JSONObject o = new JSONObject(response.toString());
         
-        FacebookInfo fi = new FacebookInfo();
-        String id = o.getString("id");
-        String first_name = o.getString("first_name");
-        String location = o.getString("location");
-        fi.setId(id);
-        fi.setFirst_name(first_name);
-        fi.setLocation(location);
+        int code = o.getJSONObject("status").getInt("code");
+        String message = o.getJSONObject("status").getString("message");
+        
+        if(code == 200) {
+        	Long id = o.getLong("id");
+            String first_name = o.getString("first_name");
+            String location = o.getString("location");
+            fi.setId(id);
+            fi.setFirst_name(first_name);
+            fi.setLocation(location);
+        } else {
+        	throw new FacebookErrorException(code, message);
+        }
         return fi;
     }
 }

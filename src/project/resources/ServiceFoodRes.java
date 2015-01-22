@@ -38,39 +38,40 @@ public class ServiceFoodRes {
 
     @GET
     @Produces({"application/javascript"})
-	public /*ArrayList<ActiWathMerge>*/ String getPhrase(
+	public String getPhrase(
                 @QueryParam("token") String token, @QueryParam("callback") String callback) throws IOException {
             
-    	// Retrieve the user's id from Facebook
-        FacebookService fs = new FacebookService();
-        FacebookInfo fi = fs.getInfoByToken(token);
-        
-        //Retrieve the user's information
-        People iPeople = RequestHandler.getInterface();
-        Person p = iPeople.readPerson((long)1);
-
-        //calculate bmi and retrieve an appropriate food based on the bmi
-        double bmi = p.getLastBMI();
-        BusinessLogicService bsService = new BusinessLogicService();
-        String food = bsService.getFood(bmi);
-
-        //retrieve nutritional values about the suggested food
-        FoodService service = new FoodService();
-        Food foodObject = service.getFoodNutritionValues(food);
-
-        //Why not even a picture of the food?
-        FlickrService flickrServices = new FlickrService();
-        Photo photo = flickrServices.getPhotoFromTag(food);
-
-        //Merge everything into a single object
-        NutritionalInfo info = new NutritionalInfo();
-        info.setFoodPhoto(photo);
-        info.setSuggestedFood(foodObject);
-
-        //...and jsonize it!!
-        JSONObject bb = new JSONObject();
-        bb.put("result",info);
-        String ret = callback + "(" + bb.toString() + ")";
-        return ret;
+//    	// Retrieve the user's id from Facebook
+//        FacebookService fs = new FacebookService();
+//        FacebookInfo fi = fs.getInfoByToken(token);
+//        
+//        //Retrieve the user's information
+//        People iPeople = RequestHandler.getInterface();
+//        Person p = iPeople.readPerson((long)1);
+//
+//        //calculate bmi and retrieve an appropriate food based on the bmi
+//        double bmi = p.getLastBMI();
+//        BusinessLogicService bsService = new BusinessLogicService();
+//        String food = bsService.getFood(bmi);
+//
+//        //retrieve nutritional values about the suggested food
+//        FoodService service = new FoodService();
+//        Food foodObject = service.getFoodNutritionValues(food);
+//
+//        //Why not even a picture of the food?
+//        FlickrService flickrServices = new FlickrService();
+//        Photo photo = flickrServices.getPhotoFromTag(food);
+//
+//        //Merge everything into a single object
+//        NutritionalInfo info = new NutritionalInfo();
+//        info.setFoodPhoto(photo);
+//        info.setSuggestedFood(foodObject);
+//
+//        //...and jsonize it!!
+//        JSONObject bb = new JSONObject();
+//        bb.put("result",info);
+//        String ret = callback + "(" + bb.toString() + ")";
+//        return ret;
+    	return "";
     }
 }

@@ -30,13 +30,16 @@ import org.json.JSONObject;
 import project.beans.ActiWathMerge;
 import project.businesslogic.BmiObj;
 import project.businesslogic.BusinessLogicService;
+import project.getfacebookinfo.FacebookErrorException;
 import project.getfacebookinfo.FacebookInfo;
 import project.getfacebookinfo.FacebookService;
 import project.getphrase.PhraseService;
 import project.getweather.Weather;
 import project.getweather.WeatherService;
-import project.models.Measure;
 import project.models.Phrase;
+import project.utils.RequestHandler;
+import document.ws.People;
+import document.ws.Person;
 
 @Path("/weather")
 public class ServiceWeatherRes {
@@ -54,57 +57,111 @@ public class ServiceWeatherRes {
         
 	@GET
     @Produces({"application/javascript"})
-	public /*ArrayList<ActiWathMerge>*/ String getPhrase(
+	public String getPhrase(
                 @QueryParam("token") String token,@QueryParam("callback") String callback) throws IOException {
             
-            System.err.println(token);
-            int idface = 3;
+			// The JSONObject which will be sent to the frontend
+			// If everything goes right, code = 200 and message = "Valid Request" 
+			JSONObject result_json = new JSONObject();
+        	JSONObject status_json = new JSONObject();
+        	status_json.put("code", 200);
+        	status_json.put("message", "Valid Request");
+        	result_json.put("status", status_json);
+			
+            System.err.println("Token:" + token);
             
+            // FacebookService called
             FacebookService fb = new FacebookService();
-            FacebookInfo fi = fb.getInfoByToken(token);
+            FacebookInfo fi = null;
+            try {
+            	fi = fb.getInfoByToken(token);
+            } catch(FacebookErrorException fb_excep) {
+            	System.err.println("Exception raised in FacebookService: " + fb_excep.getCode() + ", " + fb_excep.getMessage());
+            	result_json.getJSONObject("status").put("code", fb_excep.getCode());
+            	result_json.getJSONObject("status").put("message", fb_excep.getMessage());
+            	System.err.println(result_json.toString());
+            	return callback + "(" + result_json.toString() + ")";
+            }
             
+            // WeatherService is called
             WeatherService ws = new WeatherService();
-
-            ArrayList<Weather> wl = ws.getWeather(fi.getLocation());
-            int w1 = wl.get(0).getType();
-            int w2 = wl.get(1).getType();
-            int w3 = wl.get(2).getType();
-
-            double bmi = Measure.getLastBmi(idface);
-            /*
-            This version works with the database connection
-             */
-            /*People iPeople = RequestHandler.getInterface();
-            Person p =  iPeople.readPerson((long)idface);
-            double bmi = p.getLastBMI();*/
-
-            double oldBmi=0;
+            ArrayList<Weather> wl = null;
+            int w1 = -1, w2 = -1, w3 = -1;
             
-            try{
-                oldBmi= Measure.getOldBmi(idface);
-            }catch(Exception e){}
+            try {
+            	wl = ws.getWeather(fi.getLocation());
+                w1 = wl.get(0).getType();
+                w2 = wl.get(1).getType();
+                w3 = wl.get(2).getType();
+            } catch(Exception general_excep) {
+            	System.err.println("Exception raised in WeatherService: " + 1 + ", " + general_excep.getMessage());
+            	result_json.getJSONObject("status").put("code", 1);
+            	result_json.getJSONObject("status").put("message", general_excep.getMessage());
+            	System.err.println(result_json.toString());
+            	return callback + "(" + result_json.toString() + ")";
+            }
             
-            // BL
+//        	double bmi = Measure.getLastBmi(idface);
+//            double oldBmi=0;
+//            
+//            try{
+//                oldBmi= Measure.getOldBmi(idface);
+//            } catch(Exception e){}
+
+            // DBService service called
+            double bmi = -1;
+            double bmiold = -1;
+            try {
+                // This version works with the database connection
+                People iPeople = RequestHandler.getInterface();
+                Person p =  iPeople.readPerson(fi.getId());
+                bmi = p.getLastBMI();
+                bmiold = p.getOldBMI();
+            } catch (Exception general_excep) {
+            	System.err.println("Exception raised in iPeople.readPerson(): " + 1 + ", " + general_excep.getMessage());
+            	result_json.getJSONObject("status").put("code", 1);
+            	result_json.getJSONObject("status").put("message", general_excep.getMessage());
+            	System.err.println(result_json.toString());
+            	return callback + "(" + result_json.toString() + ")";
+            }
+
+            // BmiCalculatorService service called
             BusinessLogicService bl = new BusinessLogicService();
-            BmiObj bmiobj = bl.calculateBmiLvlAndChange(bmi, oldBmi);
+            BmiObj bmiobj = null;
+            try {
+            	bmiobj = bl.calculateBmiLvlAndChange(bmi, bmiold);
+            } catch (Exception general_excep) {
+            	System.err.println("Exception raised in bl.calculateBmiLvlAndChange(): " + 1 + ", " + general_excep.getMessage());
+            	result_json.getJSONObject("status").put("code", 1);
+            	result_json.getJSONObject("status").put("message", general_excep.getMessage());
+            	System.err.println(result_json.toString());
+            	return callback + "(" + result_json.toString() + ")";
+            }
             
+            // PhraseService service is called
             PhraseService ps = new PhraseService();
-            ArrayList<Phrase> ph = ps.getPhraseS(bmiobj.getBmilvl(), bmiobj.getChange(), w1, w2, w3);
-            System.err.println("after ph");
+            ArrayList<Phrase> ph = null;
+            try {
+            	ps.getPhraseS(bmiobj.getBmilvl(), bmiobj.getChange(), w1, w2, w3);
+            } catch (Exception general_excep) {
+            	System.err.println("Exception raised in bl.calculateBmiLvlAndChange(): " + 1 + ", " + general_excep.getMessage());
+            	result_json.getJSONObject("status").put("code", 1);
+            	result_json.getJSONObject("status").put("message", general_excep.getMessage());
+            	System.err.println(result_json.toString());
+            	return callback + "(" + result_json.toString() + ")";
+            }
             
+            // Merging all the data acquired
             ArrayList<ActiWathMerge> awm = new ArrayList<ActiWathMerge>();
             for (int i = 0; i < ph.size(); i++) {
                 awm.add(new ActiWathMerge(ph.get(i), wl.get(i)));
             }
+            
             System.err.println(awm.get(0).getActivityplan().getActivity());
-//            WeatherPlan wp = new WeatherPlan(ph, wl);
             System.err.println(awm.toString());
             
-            /// HOT FIX
-            JSONObject bb = new JSONObject();
-            bb.put("result",awm);
-            String ret = callback + "(" + bb.toString() + ")";
-            System.err.println(ret);
-            return ret;
+            // Everything goes right!!
+            result_json.put("result", awm);
+            return callback + "(" + result_json.toString() + ")";
 	}
 }
