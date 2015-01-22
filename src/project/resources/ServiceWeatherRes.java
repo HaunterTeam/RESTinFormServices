@@ -119,7 +119,7 @@ public class ServiceWeatherRes {
             try {
                 // This version works with the database connection
                 People iPeople = RequestHandler.getInterface();
-                Person p =  iPeople.readPerson(fi.getId());
+                Person p =  iPeople.readPerson(fi.getId(), token);
                 bmi = p.getLastBMI();
                 bmiold = p.getOldBMI();
             } catch (Exception general_excep) {
