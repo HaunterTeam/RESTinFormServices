@@ -91,7 +91,7 @@ public final class Settings {
 	public static final String FLICKR_BASE_PORT = "9091";
 	public static final String FLICKR_BASE_PATH = "/flickr/";
 
-	//Database Service
+	//SOAP Database Service
 	public static final String LOCAL_DB_BASE_URL = "http://localhost:";
 	public static final String LOCAL_DB_BASE_PORT = "8443";
 	public static final String LOCAL_DB_BASE_PATH = "/dbservice/ws/people?wsdl";
@@ -102,5 +102,10 @@ public final class Settings {
 
 	public static final String DB_BASE_ENDPOINT = "http://ws.document/";
 	public static final String DB_BASE_SERVICE = "PeopleService";
+
+	//RESTFul Database Service
+	public static final String RDB_BASE_URL = "95.85.59.245:";
+	public static final String RDB_BASE_PORT = "8086";
+	public static final String RDB_BASE_PATH = "/dbservice/";
 
 }
