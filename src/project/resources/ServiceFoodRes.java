@@ -133,30 +133,14 @@ public class ServiceFoodRes {
         info.setFoodPhoto(photo);
         info.setSuggestedFood(foodObject);
         
-//        JSONObject info_json = new JSONObject(info.toString());
-//        info_json.put("flickr", photo);
-//        info_json.put("food", foodObject);
-
-        java.io.StringWriter sw = new StringWriter();
-        JAXBContext jc = JAXBContext.newInstance(NutritionalInfo.class);
-        
-        System.err.println("BEFORE");
-
-        try {
-        Marshaller marshaller = jc.createMarshaller();
-//        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-//        marshaller.setProperty("eclipselink.media.type", "application/json");
-        marshaller.marshal(info, sw);
-        } catch (Exception exoa) {
-        	exoa.printStackTrace();
-        }
-        
-        System.err.println("AFTER");
+        JSONObject info_json = new JSONObject(info.toString());
+        info_json.put("flickr", photo);
+        info_json.put("food", foodObject);
         
         // Everything goes right!!
         result_json.put(Settings.FB_JSON_OUT_RESULT_OBJ, info);
         System.out.println("Output:");
         System.out.println(result_json.toString());
-        return callback + "(" + /*result_json.toString()*/ sw.toString() + ")";
+        return callback + "(" + result_json.toString() + ")";
     }
 }
