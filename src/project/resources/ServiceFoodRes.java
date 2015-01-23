@@ -122,7 +122,7 @@ public class ServiceFoodRes {
         	return callback + "(" + result_json.toString() + ")";
         }
     
-        System.err.print("BOMBO 1");
+        System.err.print("BOMBO benza 1");
         
         //Why not even a picture of the food?
         FlickrService flickrServices = new FlickrService();
@@ -140,7 +140,7 @@ public class ServiceFoodRes {
         System.out.println("Output:");
         System.out.println(result_json.toString());
         
-        System.err.print("BOMBO 2");
+        System.err.println("BOMBO benza");
         return callback + "(" + result_json.toString() + ")";
     }
 }
