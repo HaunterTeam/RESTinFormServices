@@ -144,8 +144,8 @@ public class ServiceFoodRes {
 
         try {
         Marshaller marshaller = jc.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.setProperty("eclipselink.media.type", "application/json");
+//        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+//        marshaller.setProperty("eclipselink.media.type", "application/json");
         marshaller.marshal(info, sw);
         } catch (Exception exoa) {
         	exoa.printStackTrace();
