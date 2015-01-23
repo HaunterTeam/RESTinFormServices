@@ -157,6 +157,6 @@ public class ServiceFoodRes {
         result_json.put(Settings.FB_JSON_OUT_RESULT_OBJ, info);
         System.out.println("Output:");
         System.out.println(result_json.toString());
-        return callback + "(" + result_json.toString() + ")";
+        return callback + "(" + /*result_json.toString()*/ sw.toString() + ")";
     }
 }
