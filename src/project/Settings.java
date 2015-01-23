@@ -109,7 +109,7 @@ public final class Settings {
 
 	public static final String DB_BASE_URL = "95.85.59.245:";
 	public static final String DB_BASE_PORT = "8088";
-	public static final String DB_BASE_PATH = "/dbservice/ws/people?wsdl";
+	public static final String DB_BASE_PATH = "/dbservice/ws/people";
 
 	public static final String DB_BASE_ENDPOINT = "http://ws.document/";
 	public static final String DB_BASE_SERVICE = "PeopleService";
