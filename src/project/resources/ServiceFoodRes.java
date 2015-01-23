@@ -17,6 +17,8 @@ import project.Settings;
 import project.beans.NutritionalInfo;
 import project.businesslogic.BmiObj;
 import project.businesslogic.BusinessLogicService;
+import project.document.ws.People;
+import project.document.ws.Person;
 import project.getfacebookinfo.FacebookErrorException;
 import project.getfacebookinfo.FacebookInfo;
 import project.getfacebookinfo.FacebookService;
@@ -25,8 +27,6 @@ import project.getflickr.Photo;
 import project.getfood.Food;
 import project.getfood.FoodService;
 import project.utils.RequestHandler;
-import document.ws.People;
-import document.ws.Person;
 
 /**
  * Created by les on 20/01/15.
@@ -71,7 +71,7 @@ public class ServiceFoodRes {
         double bmi = -1;
         try {
             // This version works with the database connection
-            document.ws.People iPeople = RequestHandler.getInterface();
+            project.document.ws.People iPeople = RequestHandler.getInterface();
             Person p =  iPeople.readPerson(fi.getId(), token);
             if (p != null) {
                 bmi = p.getLastBMI();

@@ -1,5 +1,5 @@
 
-package document.ws;
+package project.document.ws;
 
 import java.util.ArrayList;
 import java.util.List;

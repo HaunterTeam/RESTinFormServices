@@ -30,6 +30,8 @@ import project.Settings;
 import project.beans.ActiWathMerge;
 import project.businesslogic.BmiObj;
 import project.businesslogic.BusinessLogicService;
+import project.document.ws.People;
+import project.document.ws.Person;
 import project.getfacebookinfo.FacebookErrorException;
 import project.getfacebookinfo.FacebookInfo;
 import project.getfacebookinfo.FacebookService;
@@ -38,8 +40,6 @@ import project.getweather.Weather;
 import project.getweather.WeatherService;
 import project.models.Phrase;
 import project.utils.RequestHandler;
-import document.ws.People;
-import document.ws.Person;
 
 
 

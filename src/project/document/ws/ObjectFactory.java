@@ -1,5 +1,5 @@
 
-package document.ws;
+package project.document.ws;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
