@@ -127,11 +127,13 @@ public class ServiceFoodRes {
         Photo photo = flickrServices.getPhotoFromTag(food);
 
         //Merge everything into a single object
-        NutritionalInfo info = new NutritionalInfo();
-        info.setFoodPhoto(photo);
-        info.setSuggestedFood(foodObject);
+//        NutritionalInfo info = new NutritionalInfo();
+//        info.setFoodPhoto(photo);
+//        info.setSuggestedFood(foodObject);
         
-        JSONObject info_json = new JSONObject(info);
+        JSONObject info_json = new JSONObject();
+        info_json.put("flickr", photo);
+        info_json.put("food", foodObject);
 
         // Everything goes right!!
         result_json.put(Settings.FB_JSON_OUT_RESULT_OBJ, info_json.toString());
