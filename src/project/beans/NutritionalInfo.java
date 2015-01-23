@@ -34,4 +34,9 @@ public class NutritionalInfo {
     public void setFoodPhoto(Photo foodPhoto) {
         this.foodPhoto = foodPhoto;
     }
+
+	@Override
+	public String toString() {
+		return foodPhoto.toString() + suggestedFood.toString();
+	}
 }
