@@ -2,6 +2,7 @@ package project.resources;
 
 
 import java.io.IOException;
+import java.io.StringWriter;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -136,13 +137,17 @@ public class ServiceFoodRes {
 //        info_json.put("flickr", photo);
 //        info_json.put("food", foodObject);
 
-        
+        java.io.StringWriter sw = new StringWriter();
         JAXBContext jc = JAXBContext.newInstance(NutritionalInfo.class);
+        
+        System.err.println("BEFORE");
         
         Marshaller marshaller = jc.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         marshaller.setProperty("eclipselink.media.type", "application/json");
-        marshaller.marshal(info, System.out);
+        marshaller.marshal(info, sw);
+        
+        System.err.println("AFTER");
         
         // Everything goes right!!
         result_json.put(Settings.FB_JSON_OUT_RESULT_OBJ, info);
