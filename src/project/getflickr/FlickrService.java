@@ -1,5 +1,10 @@
 package project.getflickr;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import org.json.JSONObject;
 
 import project.Settings;
@@ -11,28 +16,48 @@ import project.utils.RequestHandler;
 public class FlickrService {
     private RequestHandler handler;
 
-    public FlickrService(){
-        handler = new RequestHandler(Settings.FLICKR_BASE_URL + Settings.FLICKR_BASE_PORT + Settings.FLICKR_BASE_PATH);
-    }
+    public FlickrService() { }
 
     public Photo getPhotoFromTag(String tag) {
     	
-    	String url = Settings.FLICKR_BASE_URL + Settings.FLICKR_BASE_PORT + Settings.FLICKR_BASE_PATH + tag;
+    	String url = Settings.BASE_PROTOCOL + Settings.FLICKR_BASE_URL + Settings.FLICKR_BASE_PORT + Settings.FLICKR_BASE_PATH + tag;
     	
     	System.out.println("URL: " + url);
+    	Photo photo = new Photo();
     	
-        handler.set_url(url);
-        JSONObject obj = new JSONObject(handler.getRequestResult());
+    	try {
+        	
+        	URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-        if(obj == null) { return null; }
-        
-        Photo photo = new Photo();
-        photo.setDateAdded(obj.get("dateAdded") == null?obj.getString("dateAdded"):"");
-        photo.setDescription(obj.get("description") == null?obj.getString("description"):"");
-        photo.setId(obj.getString("id"));
-        photo.setUrl(obj.getString("url"));
-        photo.setTitle(obj.get("title") == null?obj.getString("title"):"");
-
+            con.setRequestMethod(Settings.REQ_TYPE);
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+            }
+            in.close();
+            
+            JSONObject flickr_serv_response = new JSONObject(response.toString());
+            
+            System.err.println(flickr_serv_response.toString());
+            
+            
+            photo.setDateAdded(flickr_serv_response
+            		.get(Settings.FLICKR_JSON_DATE_ATTR) == null ? flickr_serv_response.getString(Settings.FLICKR_JSON_DATE_ATTR): "");
+            photo.setDescription(flickr_serv_response
+            		.get(Settings.FLICKR_JSON_DESCRIPTION_ATTR) == null ? flickr_serv_response.getString(Settings.FLICKR_JSON_DESCRIPTION_ATTR): "");
+            photo.setId(flickr_serv_response.getString(Settings.FLICKR_JSON_ID_ATTR));
+            photo.setUrl(flickr_serv_response.getString(Settings.FLICKR_JSON_URL_ATTR));
+            photo.setTitle(flickr_serv_response
+            		.get(Settings.FLICKR_JSON_TITLE_ATTR) == null ? flickr_serv_response.getString(Settings.FLICKR_JSON_TITLE_ATTR) : "");
+	       
+        } catch (Exception excep) {
+        	
+        	System.err.println("Exception catched, " + excep.toString());
+        	return null;
+        }
         return photo;
     }
 }

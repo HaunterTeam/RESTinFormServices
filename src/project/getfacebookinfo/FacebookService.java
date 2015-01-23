@@ -20,15 +20,15 @@ public class FacebookService {
 
     public FacebookService() { }
     
-    public FacebookInfo getInfoByToken(String token) throws MalformedURLException, IOException, FacebookErrorException {
+    public FacebookInfo getInfoByToken(String token) throws FacebookErrorException {
     	
     	String url = Settings.BASE_PROTOCOL + Settings.FB_BASE_URL + Settings.FB_BASE_PORT + Settings.FB_BASE_PATH + token;
+    	System.out.println("URL: " + url);
     	
     	FacebookInfo fi = new FacebookInfo();
         
         try {
         	
-        	System.out.println("Request:" + url);
         	URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 

@@ -74,13 +74,18 @@ public final class Settings {
 	//Nutritionix Service
 	public static final String LOCAL_FOOD_BASE_URL = "localhost:";
 	public static final String LOCAL_FOOD_BASE_PORT = "8443";
-	public static final String LOCAL_FOOD_BASE_PATH = "/nutritionix/food/";
+	public static final String LOCAL_FOOD_BASE_PATH = "/nutritionix/food";
 
 	public static final String FOOD_BASE_URL = "95.85.59.245:";
 	public static final String FOOD_BASE_PORT = "8443";
-	public static final String FOOD_BASE_PATH = "/nutritionix/food/";
+	public static final String FOOD_BASE_PATH = "/nutritionix/food";
 
 	public static final String FOOD_PARAM = "food";
+	
+	public static final String FOOD_JSON_ITEM_NAME_ATTR = "item_name";
+	public static final String FOOD_JSON_BRAND_NAME_ATTR = "brand_name";
+	public static final String FOOD_JSON_CALORIES_ATTR = "calories"; // "nf_calories";
+	public static final String FOOD_JSON_FAT_ATTR = "fat"; //"nf_total_fat";
 
 	//Flickr Service
 	public static final String LOCAL_FLICKR_BASE_URL = "localhost:";
@@ -90,6 +95,12 @@ public final class Settings {
 	public static final String FLICKR_BASE_URL = "95.85.59.245:";
 	public static final String FLICKR_BASE_PORT = "9091";
 	public static final String FLICKR_BASE_PATH = "/flickr/";
+
+	public static final String FLICKR_JSON_TITLE_ATTR = "title";
+	public static final String FLICKR_JSON_URL_ATTR = "url";
+	public static final String FLICKR_JSON_ID_ATTR = "id";
+	public static final String FLICKR_JSON_DESCRIPTION_ATTR = "description";
+	public static final String FLICKR_JSON_DATE_ATTR = "dateAdded";
 
 	//SOAP Database Service
 	public static final String LOCAL_DB_BASE_URL = "http://localhost:";

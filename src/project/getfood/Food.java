@@ -7,24 +7,24 @@ public class Food {
 
     private String name;
     private String brand;
-    private float calories;
-    private float fat;
+    private double calories;
+    private double fat;
 
     public Food() {}
 
-    public float getCalories() {
+    public double getCalories() {
         return calories;
     }
 
-    public void setCalories(float calories) {
+    public void setCalories(double calories) {
         this.calories = calories;
     }
 
-    public float getFat() {
+    public double getFat() {
         return fat;
     }
 
-    public void setFat(float fat) {
+    public void setFat(double fat) {
         this.fat = fat;
     }
 

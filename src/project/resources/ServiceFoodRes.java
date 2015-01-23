@@ -13,8 +13,11 @@ import javax.ws.rs.core.UriInfo;
 
 import org.json.JSONObject;
 
+import project.Settings;
 import project.beans.NutritionalInfo;
+import project.businesslogic.BmiObj;
 import project.businesslogic.BusinessLogicService;
+import project.getfacebookinfo.FacebookErrorException;
 import project.getfacebookinfo.FacebookInfo;
 import project.getfacebookinfo.FacebookService;
 import project.getflickr.FlickrService;
@@ -41,37 +44,99 @@ public class ServiceFoodRes {
 	public String getPhrase(
                 @QueryParam("token") String token, @QueryParam("callback") String callback) throws IOException {
             
-//    	// Retrieve the user's id from Facebook
-//        FacebookService fs = new FacebookService();
-//        FacebookInfo fi = fs.getInfoByToken(token);
-//        
-//        //Retrieve the user's information
-//        People iPeople = RequestHandler.getInterface();
-//        Person p = iPeople.readPerson((long)1);
-//
-//        //calculate bmi and retrieve an appropriate food based on the bmi
-//        double bmi = p.getLastBMI();
-//        BusinessLogicService bsService = new BusinessLogicService();
-//        String food = bsService.getFood(bmi);
-//
-//        //retrieve nutritional values about the suggested food
-//        FoodService service = new FoodService();
-//        Food foodObject = service.getFoodNutritionValues(food);
-//
-//        //Why not even a picture of the food?
-//        FlickrService flickrServices = new FlickrService();
-//        Photo photo = flickrServices.getPhotoFromTag(food);
-//
-//        //Merge everything into a single object
-//        NutritionalInfo info = new NutritionalInfo();
-//        info.setFoodPhoto(photo);
-//        info.setSuggestedFood(foodObject);
-//
-//        //...and jsonize it!!
-//        JSONObject bb = new JSONObject();
-//        bb.put("result",info);
-//        String ret = callback + "(" + bb.toString() + ")";
-//        return ret;
-    	return "";
+		// The JSONObject which will be sent to the frontend
+		// If everything goes right, code = 200 and message = "Valid Request" 
+		JSONObject result_json = new JSONObject();
+    	JSONObject status_json = new JSONObject();
+    	status_json.put(Settings.FB_JSON_OUT_STATUS_CODE_ATTR, Settings.FB_OK_REQ);
+    	status_json.put(Settings.FB_JSON_OUT_STATUS_MESSAGE_ATTR, Settings.FB_OK_MESSAGE);
+    	result_json.put(Settings.FB_JSON_OUT_STATUS_OBJ, status_json);
+        
+        // FacebookService called
+        FacebookService fb = new FacebookService();
+        FacebookInfo fi = null;
+        try {
+        	fi = fb.getInfoByToken(token);
+        } catch(FacebookErrorException fb_excep) {
+        	System.err.println("Exception raised in FacebookService: " + fb_excep.getCode() + ", " + fb_excep.getMessage());
+        	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+        		.put(Settings.FB_JSON_OUT_STATUS_CODE_ATTR, fb_excep.getCode());
+        	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+        		.put(Settings.FB_JSON_OUT_STATUS_MESSAGE_ATTR, fb_excep.getMessage());
+        	System.err.println(result_json.toString());
+        	return callback + "(" + result_json.toString() + ")";
+        }
+        
+        // DBService service called
+        double bmi = -1;
+        try {
+            // This version works with the database connection
+            document.ws.People iPeople = RequestHandler.getInterface();
+            Person p =  iPeople.readPerson(fi.getId(), token);
+            if (p != null) {
+                bmi = p.getLastBMI();
+            } else {
+            	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+        		.put(Settings.FB_JSON_OUT_STATUS_CODE_ATTR, Settings.FB_ERR_REQ);
+            	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+            		.put(Settings.FB_JSON_OUT_STATUS_MESSAGE_ATTR, "No Person Found for id = " + fi.getId());
+            	System.err.println(result_json.toString());
+            	return callback + "(" + result_json.toString() + ")";
+            }
+        } catch (Exception general_excep) {
+        	System.err.println("Exception raised in iPeople.readPerson(): " + Settings.FB_ERR_REQ + ", " + general_excep.getMessage());
+        	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+        		.put(Settings.FB_JSON_OUT_STATUS_CODE_ATTR, Settings.FB_ERR_REQ);
+        	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+        		.put(Settings.FB_JSON_OUT_STATUS_MESSAGE_ATTR, general_excep.getMessage());
+        	System.err.println(result_json.toString());
+        	return callback + "(" + result_json.toString() + ")";
+        }
+
+        // BmiCalculatorService service called
+        BusinessLogicService bl = new BusinessLogicService();
+        String food = "";
+        try {
+        	food = bl.getFood(bmi);
+        } catch (Exception general_excep) {
+        	System.err.println("Exception raised in bl.getFood(): " + Settings.FB_ERR_REQ + ", " + general_excep.getMessage());
+        	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+        		.put(Settings.FB_JSON_OUT_STATUS_CODE_ATTR, Settings.FB_ERR_REQ);
+        	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+        		.put(Settings.FB_JSON_OUT_STATUS_MESSAGE_ATTR, general_excep.getMessage());
+        	System.err.println(result_json.toString());
+        	return callback + "(" + result_json.toString() + ")";
+        }
+        
+
+        //retrieve nutritional values about the suggested food
+        FoodService service = new FoodService();
+        Food foodObject = service.getFoodNutritionValues(food);
+        if (foodObject == null) {
+        	System.err.println("Exception raised in service.getFoodNutritionValues(): " + Settings.FB_ERR_REQ + ", " + "foodObject is null");
+        	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+        		.put(Settings.FB_JSON_OUT_STATUS_CODE_ATTR, Settings.FB_ERR_REQ);
+        	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
+        		.put(Settings.FB_JSON_OUT_STATUS_MESSAGE_ATTR, "No Food Found");
+        	System.err.println(result_json.toString());
+        	return callback + "(" + result_json.toString() + ")";
+        }
+    
+        //Why not even a picture of the food?
+        FlickrService flickrServices = new FlickrService();
+        Photo photo = flickrServices.getPhotoFromTag(food);
+
+        //Merge everything into a single object
+        NutritionalInfo info = new NutritionalInfo();
+        info.setFoodPhoto(photo);
+        info.setSuggestedFood(foodObject);
+        
+        JSONObject info_json = new JSONObject(info);
+
+        // Everything goes right!!
+        result_json.put(Settings.FB_JSON_OUT_RESULT_OBJ, info_json.toString());
+        System.out.println("Output:");
+        System.out.println(result_json.toString());
+        return callback + "(" + result_json.toString() + ")";
     }
 }
