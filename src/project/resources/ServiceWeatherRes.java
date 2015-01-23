@@ -125,6 +125,7 @@ public class ServiceWeatherRes {
             }
         } catch (Exception general_excep) {
         	System.err.println("Exception raised in iPeople.readPerson(): " + Settings.FB_ERR_REQ + ", " + general_excep.getMessage());
+        	general_excep.printStackTrace();
         	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
         		.put(Settings.FB_JSON_OUT_STATUS_CODE_ATTR, Settings.FB_ERR_REQ);
         	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
@@ -154,7 +155,7 @@ public class ServiceWeatherRes {
         try {
         	ph = ps.getPhraseS(bmiobj.getBmilvl(), bmiobj.getChange(), w1, w2, w3);
         } catch (Exception general_excep) {
-        	System.err.println("Exception raised in bl.calculateBmiLvlAndChange(): " + Settings.FB_ERR_REQ + ", " + general_excep.getMessage());
+        	System.err.println("Exception raised in ps.getPhraseS(): " + Settings.FB_ERR_REQ + ", " + general_excep.getMessage());
         	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
         		.put(Settings.FB_JSON_OUT_STATUS_CODE_ATTR, Settings.FB_ERR_REQ);
         	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
