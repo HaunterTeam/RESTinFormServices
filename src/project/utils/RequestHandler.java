@@ -13,8 +13,8 @@ import javax.xml.ws.Service;
 
 import org.glassfish.jersey.client.ClientConfig;
 
+import document.ws.People;
 import project.Settings;
-import project.document.ws.People;
 
 /**
  * Created by les on 16/01/15.

@@ -1,5 +1,5 @@
 
-package project.document.ws;
+package document.ws;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

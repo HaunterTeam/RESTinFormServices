@@ -26,12 +26,12 @@ import javax.ws.rs.core.UriInfo;
 
 import org.json.JSONObject;
 
+import document.ws.People;
+import document.ws.Person;
 import project.Settings;
 import project.beans.ActiWathMerge;
 import project.businesslogic.BmiObj;
 import project.businesslogic.BusinessLogicService;
-import project.document.ws.People;
-import project.document.ws.Person;
 import project.getfacebookinfo.FacebookErrorException;
 import project.getfacebookinfo.FacebookInfo;
 import project.getfacebookinfo.FacebookService;

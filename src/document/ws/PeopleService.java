@@ -1,5 +1,5 @@
 
-package project.document.ws;
+package document.ws;
 
 import java.net.MalformedURLException;
 import java.net.URL;

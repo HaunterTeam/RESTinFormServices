@@ -1,5 +1,5 @@
 
-package project.document.ws;
+package document.ws;
 
 import javax.xml.ws.WebFault;
 
