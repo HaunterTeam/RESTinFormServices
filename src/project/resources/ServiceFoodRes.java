@@ -10,14 +10,14 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 import org.json.JSONObject;
 
-import document.ws.People;
-import document.ws.Person;
 import project.Settings;
 import project.beans.NutritionalInfo;
-import project.businesslogic.BmiObj;
 import project.businesslogic.BusinessLogicService;
 import project.getfacebookinfo.FacebookErrorException;
 import project.getfacebookinfo.FacebookInfo;
@@ -27,6 +27,7 @@ import project.getflickr.Photo;
 import project.getfood.Food;
 import project.getfood.FoodService;
 import project.utils.RequestHandler;
+import document.ws.Person;
 
 /**
  * Created by les on 20/01/15.
@@ -42,7 +43,7 @@ public class ServiceFoodRes {
     @GET
     @Produces({"application/javascript"})
 	public String getPhrase(
-                @QueryParam("token") String token, @QueryParam("callback") String callback) throws IOException {
+                @QueryParam("token") String token, @QueryParam("callback") String callback) throws IOException, JAXBException {
             
 		// The JSONObject which will be sent to the frontend
 		// If everything goes right, code = 200 and message = "Valid Request" 
@@ -135,6 +136,14 @@ public class ServiceFoodRes {
 //        info_json.put("flickr", photo);
 //        info_json.put("food", foodObject);
 
+        
+        JAXBContext jc = JAXBContext.newInstance(NutritionalInfo.class);
+        
+        Marshaller marshaller = jc.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        marshaller.setProperty("eclipselink.media.type", "application/json");
+        marshaller.marshal(info, System.out);
+        
         // Everything goes right!!
         result_json.put(Settings.FB_JSON_OUT_RESULT_OBJ, info);
         System.out.println("Output:");
