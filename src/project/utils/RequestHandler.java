@@ -91,6 +91,8 @@ public class RequestHandler {
         }
         catch (Exception ex){
             System.out.println("Exception catched: " + ex.getMessage());
+            System.err.println("BOMBO");
+            ex.printStackTrace();
         }
         return people;
     }
