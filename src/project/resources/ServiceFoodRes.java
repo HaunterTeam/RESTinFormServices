@@ -121,8 +121,6 @@ public class ServiceFoodRes {
         	System.err.println(result_json.toString());
         	return callback + "(" + result_json.toString() + ")";
         }
-    
-        System.err.print("BOMBO benza 1");
         
         //Why not even a picture of the food?
         FlickrService flickrServices = new FlickrService();
@@ -133,14 +131,13 @@ public class ServiceFoodRes {
         info.setFoodPhoto(photo);
         info.setSuggestedFood(foodObject);
         
-        JSONObject info_json = new JSONObject(info);
+        JSONObject info_json = new JSONObject();
+        info_json.put("food", info);
 
         // Everything goes right!!
         result_json.put(Settings.FB_JSON_OUT_RESULT_OBJ, info_json.toString());
         System.out.println("Output:");
         System.out.println(result_json.toString());
-        
-        System.err.println("BOMBO benza");
         return callback + "(" + result_json.toString() + ")";
     }
 }
