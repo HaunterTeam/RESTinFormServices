@@ -131,8 +131,7 @@ public class ServiceFoodRes {
         info.setFoodPhoto(photo);
         info.setSuggestedFood(foodObject);
         
-        JSONObject info_json = new JSONObject();
-        info_json.put("food", info);
+        JSONObject info_json = new JSONObject(info);
 
         // Everything goes right!!
         result_json.put(Settings.FB_JSON_OUT_RESULT_OBJ, info_json.toString());
