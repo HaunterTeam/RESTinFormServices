@@ -85,6 +85,9 @@ public class RequestHandler {
             QName qname = new QName(Settings.DB_BASE_ENDPOINT, Settings.DB_BASE_SERVICE);
             Service service = Service.create(url, qname);
             people = service.getPort(People.class);
+            
+            System.err.println("asdaddasdad");
+            
         }
         catch (Exception ex){
             System.out.println("Exception catched: " + ex.getMessage());
