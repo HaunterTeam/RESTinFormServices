@@ -80,8 +80,8 @@ public class RequestHandler {
     public static People getInterface() {
         People people = null;
         try {
-        	URL url = new URL(Settings.LOCAL_DB_BASE_URL + Settings.LOCAL_DB_BASE_PORT + Settings.LOCAL_DB_BASE_PATH);
-        	// URL url = new URL(Settings.DB_BASE_URL + Settings.DB_BASE_PORT + Settings.DB_BASE_PATH);
+//        	URL url = new URL(Settings.LOCAL_DB_BASE_URL + Settings.LOCAL_DB_BASE_PORT + Settings.LOCAL_DB_BASE_PATH);
+        	URL url = new URL(Settings.DB_BASE_URL + Settings.DB_BASE_PORT + Settings.DB_BASE_PATH);
             QName qname = new QName(Settings.DB_BASE_ENDPOINT, Settings.DB_BASE_SERVICE);
             Service service = Service.create(url, qname);
             people = service.getPort(People.class);
