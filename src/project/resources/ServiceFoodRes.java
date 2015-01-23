@@ -122,6 +122,8 @@ public class ServiceFoodRes {
         	return callback + "(" + result_json.toString() + ")";
         }
     
+        System.err.print("BOMBO 1");
+        
         //Why not even a picture of the food?
         FlickrService flickrServices = new FlickrService();
         Photo photo = flickrServices.getPhotoFromTag(food);
@@ -137,6 +139,8 @@ public class ServiceFoodRes {
         result_json.put(Settings.FB_JSON_OUT_RESULT_OBJ, info_json.toString());
         System.out.println("Output:");
         System.out.println(result_json.toString());
+        
+        System.err.print("BOMBO 2");
         return callback + "(" + result_json.toString() + ")";
     }
 }
