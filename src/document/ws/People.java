@@ -1,13 +1,11 @@
 
 package document.ws;
 
-import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.Action;
 import javax.xml.ws.FaultAction;
 import javax.xml.ws.RequestWrapper;
@@ -29,211 +27,27 @@ public interface People {
 
     /**
      * 
+     * @param token
      * @param personId
      * @return
      *     returns document.ws.Person
+     * @throws MalformedURLException_Exception
+     * @throws IOException_Exception
      */
     @WebMethod
     @WebResult(name = "singlePerson", targetNamespace = "")
     @RequestWrapper(localName = "readPerson", targetNamespace = "http://ws.document/", className = "document.ws.ReadPerson")
     @ResponseWrapper(localName = "readPersonResponse", targetNamespace = "http://ws.document/", className = "document.ws.ReadPersonResponse")
-    @Action(input = "http://ws.document/People/readPersonRequest", output = "http://ws.document/People/readPersonResponse")
+    @Action(input = "http://ws.document/People/readPersonRequest", output = "http://ws.document/People/readPersonResponse", fault = {
+        @FaultAction(className = MalformedURLException_Exception.class, value = "http://ws.document/People/readPerson/Fault/MalformedURLException"),
+        @FaultAction(className = IOException_Exception.class, value = "http://ws.document/People/readPerson/Fault/IOException")
+    })
     public Person readPerson(
         @WebParam(name = "personId", targetNamespace = "")
-        Long personId);
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<document.ws.Person>
-     */
-    @WebMethod
-    @WebResult(name = "people", targetNamespace = "")
-    @RequestWrapper(localName = "readPersonList", targetNamespace = "http://ws.document/", className = "document.ws.ReadPersonList")
-    @ResponseWrapper(localName = "readPersonListResponse", targetNamespace = "http://ws.document/", className = "document.ws.ReadPersonListResponse")
-    @Action(input = "http://ws.document/People/readPersonListRequest", output = "http://ws.document/People/readPersonListResponse")
-    public List<Person> readPersonList();
-
-    /**
-     * 
-     * @param person
-     * @return
-     *     returns document.ws.Person
-     */
-    @WebMethod
-    @WebResult(name = "singlePerson", targetNamespace = "")
-    @RequestWrapper(localName = "createPerson", targetNamespace = "http://ws.document/", className = "document.ws.CreatePerson")
-    @ResponseWrapper(localName = "createPersonResponse", targetNamespace = "http://ws.document/", className = "document.ws.CreatePersonResponse")
-    @Action(input = "http://ws.document/People/createPersonRequest", output = "http://ws.document/People/createPersonResponse")
-    public Person createPerson(
-        @WebParam(name = "person", targetNamespace = "")
-        Person person);
-
-    /**
-     * 
-     * @param person
-     * @return
-     *     returns document.ws.Person
-     */
-    @WebMethod
-    @WebResult(name = "singlePerson", targetNamespace = "")
-    @RequestWrapper(localName = "updatePerson", targetNamespace = "http://ws.document/", className = "document.ws.UpdatePerson")
-    @ResponseWrapper(localName = "updatePersonResponse", targetNamespace = "http://ws.document/", className = "document.ws.UpdatePersonResponse")
-    @Action(input = "http://ws.document/People/updatePersonRequest", output = "http://ws.document/People/updatePersonResponse")
-    public Person updatePerson(
-        @WebParam(name = "person", targetNamespace = "")
-        Person person);
-
-    /**
-     * 
-     * @param personId
-     */
-    @WebMethod
-    @RequestWrapper(localName = "deletePerson", targetNamespace = "http://ws.document/", className = "document.ws.DeletePerson")
-    @ResponseWrapper(localName = "deletePersonResponse", targetNamespace = "http://ws.document/", className = "document.ws.DeletePersonResponse")
-    @Action(input = "http://ws.document/People/deletePersonRequest", output = "http://ws.document/People/deletePersonResponse")
-    public void deletePerson(
-        @WebParam(name = "personId", targetNamespace = "")
-        Long personId);
-
-    /**
-     * 
-     * @param id
-     * @param measureType
-     * @return
-     *     returns java.util.List<document.ws.Measure>
-     */
-    @WebMethod
-    @WebResult(name = "measurehistory", targetNamespace = "")
-    @RequestWrapper(localName = "readPersonHistory", targetNamespace = "http://ws.document/", className = "document.ws.ReadPersonHistory")
-    @ResponseWrapper(localName = "readPersonHistoryResponse", targetNamespace = "http://ws.document/", className = "document.ws.ReadPersonHistoryResponse")
-    @Action(input = "http://ws.document/People/readPersonHistoryRequest", output = "http://ws.document/People/readPersonHistoryResponse")
-    public List<Measure> readPersonHistory(
-        @WebParam(name = "id", targetNamespace = "")
-        Long id,
-        @WebParam(name = "measureType", targetNamespace = "")
-        String measureType);
-
-    /**
-     * 
-     * @param id
-     * @param measureType
-     * @param mid
-     * @return
-     *     returns document.ws.Measure
-     */
-    @WebMethod
-    @WebResult(name = "singleMeasure", targetNamespace = "")
-    @RequestWrapper(localName = "readPersonMeasurement", targetNamespace = "http://ws.document/", className = "document.ws.ReadPersonMeasurement")
-    @ResponseWrapper(localName = "readPersonMeasurementResponse", targetNamespace = "http://ws.document/", className = "document.ws.ReadPersonMeasurementResponse")
-    @Action(input = "http://ws.document/People/readPersonMeasurementRequest", output = "http://ws.document/People/readPersonMeasurementResponse")
-    public Measure readPersonMeasurement(
-        @WebParam(name = "id", targetNamespace = "")
-        Long id,
-        @WebParam(name = "measureType", targetNamespace = "")
-        String measureType,
-        @WebParam(name = "mid", targetNamespace = "")
-        Long mid);
-
-    /**
-     * 
-     * @param id
-     * @param measure
-     * @param measureType
-     * @return
-     *     returns java.lang.Long
-     */
-    @WebMethod
-    @WebResult(name = "measurehistory", targetNamespace = "")
-    @RequestWrapper(localName = "savePersonMeasurement", targetNamespace = "http://ws.document/", className = "document.ws.SavePersonMeasurement")
-    @ResponseWrapper(localName = "savePersonMeasurementResponse", targetNamespace = "http://ws.document/", className = "document.ws.SavePersonMeasurementResponse")
-    @Action(input = "http://ws.document/People/savePersonMeasurementRequest", output = "http://ws.document/People/savePersonMeasurementResponse")
-    public Long savePersonMeasurement(
-        @WebParam(name = "id", targetNamespace = "")
-        Long id,
-        @WebParam(name = "measureType", targetNamespace = "")
-        String measureType,
-        @WebParam(name = "measure", targetNamespace = "")
-        Measure measure);
-
-    /**
-     * 
-     * @return
-     *     returns java.util.List<document.ws.MeasureType>
-     */
-    @WebMethod
-    @WebResult(name = "measureTypes", targetNamespace = "")
-    @RequestWrapper(localName = "readMeasureTypes", targetNamespace = "http://ws.document/", className = "document.ws.ReadMeasureTypes")
-    @ResponseWrapper(localName = "readMeasureTypesResponse", targetNamespace = "http://ws.document/", className = "document.ws.ReadMeasureTypesResponse")
-    @Action(input = "http://ws.document/People/readMeasureTypesRequest", output = "http://ws.document/People/readMeasureTypesResponse")
-    public List<MeasureType> readMeasureTypes();
-
-    /**
-     * 
-     * @param id
-     * @param measure
-     * @return
-     *     returns document.ws.Measure
-     * @throws NotFoundException_Exception
-     */
-    @WebMethod
-    @WebResult(name = "measurehistory", targetNamespace = "")
-    @RequestWrapper(localName = "updatePersonMeasure", targetNamespace = "http://ws.document/", className = "document.ws.UpdatePersonMeasure")
-    @ResponseWrapper(localName = "updatePersonMeasureResponse", targetNamespace = "http://ws.document/", className = "document.ws.UpdatePersonMeasureResponse")
-    @Action(input = "http://ws.document/People/updatePersonMeasureRequest", output = "http://ws.document/People/updatePersonMeasureResponse", fault = {
-        @FaultAction(className = NotFoundException_Exception.class, value = "http://ws.document/People/updatePersonMeasure/Fault/NotFoundException")
-    })
-    public Measure updatePersonMeasure(
-        @WebParam(name = "id", targetNamespace = "")
-        Long id,
-        @WebParam(name = "measure", targetNamespace = "")
-        Measure measure)
-        throws NotFoundException_Exception
+        Long personId,
+        @WebParam(name = "token", targetNamespace = "")
+        String token)
+        throws IOException_Exception, MalformedURLException_Exception
     ;
-
-    /**
-     * 
-     * @param after
-     * @param id
-     * @param before
-     * @param measureType
-     * @return
-     *     returns java.util.List<document.ws.Measure>
-     */
-    @WebMethod
-    @WebResult(name = "measurehistory", targetNamespace = "")
-    @RequestWrapper(localName = "readPersonMeasureByDates", targetNamespace = "http://ws.document/", className = "document.ws.ReadPersonMeasureByDates")
-    @ResponseWrapper(localName = "readPersonMeasureByDatesResponse", targetNamespace = "http://ws.document/", className = "document.ws.ReadPersonMeasureByDatesResponse")
-    @Action(input = "http://ws.document/People/readPersonMeasureByDatesRequest", output = "http://ws.document/People/readPersonMeasureByDatesResponse")
-    public List<Measure> readPersonMeasureByDates(
-        @WebParam(name = "id", targetNamespace = "")
-        Long id,
-        @WebParam(name = "measureType", targetNamespace = "")
-        String measureType,
-        @WebParam(name = "before", targetNamespace = "")
-        XMLGregorianCalendar before,
-        @WebParam(name = "after", targetNamespace = "")
-        XMLGregorianCalendar after);
-
-    /**
-     * 
-     * @param minValue
-     * @param measureType
-     * @param maxValue
-     * @return
-     *     returns java.util.List<document.ws.Person>
-     */
-    @WebMethod
-    @WebResult(name = "people", targetNamespace = "")
-    @RequestWrapper(localName = "readPersonListByMeasurement", targetNamespace = "http://ws.document/", className = "document.ws.ReadPersonListByMeasurement")
-    @ResponseWrapper(localName = "readPersonListByMeasurementResponse", targetNamespace = "http://ws.document/", className = "document.ws.ReadPersonListByMeasurementResponse")
-    @Action(input = "http://ws.document/People/readPersonListByMeasurementRequest", output = "http://ws.document/People/readPersonListByMeasurementResponse")
-    public List<Person> readPersonListByMeasurement(
-        @WebParam(name = "measureType", targetNamespace = "")
-        String measureType,
-        @WebParam(name = "maxValue", targetNamespace = "")
-        String maxValue,
-        @WebParam(name = "minValue", targetNamespace = "")
-        String minValue);
 
 }

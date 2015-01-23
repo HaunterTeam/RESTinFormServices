@@ -1,20 +1,20 @@
 package project.utils;
 
-import document.ws.People;
-
-import org.glassfish.jersey.client.ClientConfig;
-
-import project.Settings;
+import java.net.URL;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import org.glassfish.jersey.client.ClientConfig;
+
+import project.Settings;
+import document.ws.People;
 
 /**
  * Created by les on 16/01/15.

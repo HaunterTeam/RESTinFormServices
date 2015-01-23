@@ -9,7 +9,6 @@ package project.resources;
  *
  * @author luca
  */
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
@@ -39,6 +38,7 @@ import project.getweather.Weather;
 import project.getweather.WeatherService;
 import project.models.Phrase;
 import project.utils.RequestHandler;
+import document.ws.People;
 import document.ws.Person;
 
 
@@ -110,7 +110,7 @@ public class ServiceWeatherRes {
         double bmiold = -1;
         try {
             // This version works with the database connection
-            document.ws.People iPeople = RequestHandler.getInterface();
+            People iPeople = RequestHandler.getInterface();
             Person p =  iPeople.readPerson(fi.getId(), token);
             if (p != null) {
                 bmi = p.getLastBMI();
