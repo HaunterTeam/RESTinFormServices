@@ -94,7 +94,7 @@ public final class Settings {
 
 	public static final String FLICKR_BASE_URL = "restinflickrservice.herokuapp.com";
 	public static final String FLICKR_BASE_PORT = "";
-	public static final String FLICKR_BASE_PATH = "/";
+	public static final String FLICKR_BASE_PATH = "/flickr/";
 
 	public static final String FLICKR_JSON_TITLE_ATTR = "title";
 	public static final String FLICKR_JSON_URL_ATTR = "url";
