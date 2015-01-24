@@ -88,9 +88,9 @@ public final class Settings {
 	public static final String FOOD_JSON_FAT_ATTR = "fat"; //"nf_total_fat";
 
 	//Flickr Service
-	public static final String LOCAL_FLICKR_BASE_URL = "localhost:";
-	public static final String LOCAL_FLICKR_BASE_PORT = "9091";
-	public static final String LOCAL_FLICKR_BASE_PATH = "/flickr/";
+	public static final String LOCAL_FLICKR_BASE_URL = "restinflickrservice.herokuapp.com:";
+	public static final String LOCAL_FLICKR_BASE_PORT = "";
+	public static final String LOCAL_FLICKR_BASE_PATH = "/";
 
 	public static final String FLICKR_BASE_URL = "95.85.59.245:";
 	public static final String FLICKR_BASE_PORT = "9091";
