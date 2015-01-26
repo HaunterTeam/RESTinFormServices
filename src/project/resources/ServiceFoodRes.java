@@ -2,7 +2,6 @@ package project.resources;
 
 
 import java.io.IOException;
-import java.io.StringWriter;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,9 +10,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 
 import org.json.JSONObject;
 
@@ -28,6 +25,7 @@ import project.getflickr.Photo;
 import project.getfood.Food;
 import project.getfood.FoodService;
 import project.utils.RequestHandler;
+import document.ws.People;
 import document.ws.Person;
 
 /**
@@ -73,7 +71,7 @@ public class ServiceFoodRes {
         double bmi = -1;
         try {
             // This version works with the database connection
-            document.ws.People iPeople = RequestHandler.getInterface();
+            People iPeople = RequestHandler.getInterface();
             Person p =  iPeople.readPerson(fi.getId(), token);
             if (p != null) {
                 bmi = p.getLastBMI();
@@ -133,12 +131,9 @@ public class ServiceFoodRes {
         info.setFoodPhoto(photo);
         info.setSuggestedFood(foodObject);
         
-        JSONObject info_json = new JSONObject(info.toString());
-        info_json.put("flickr", photo);
-        info_json.put("food", foodObject);
-        
         // Everything goes right!!
-        result_json.put(Settings.FB_JSON_OUT_RESULT_OBJ, info);
+        JSONObject info_json = new JSONObject(info);
+        result_json.put(Settings.FB_JSON_OUT_RESULT_OBJ, info_json);
         System.out.println("Output:");
         System.out.println(result_json.toString());
         return callback + "(" + result_json.toString() + ")";

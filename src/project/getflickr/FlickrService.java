@@ -14,7 +14,6 @@ import project.utils.RequestHandler;
  * Created by les on 19/01/15.
  */
 public class FlickrService {
-    private RequestHandler handler;
 
     public FlickrService() { }
 
@@ -55,7 +54,7 @@ public class FlickrService {
 	       
         } catch (Exception excep) {
         	
-        	System.err.println("Exception catched, " + excep.toString());
+        	System.err.println("Exception catched in " + this.getClass().getName() + " " + excep.toString());
         	return null;
         }
         return photo;

@@ -11,7 +11,7 @@ import project.getfood.Food;
  * Created by les on 20/01/15.
  */
 @XmlRootElement(name="foodsuggestion")
-@XmlAccessorType(XmlAccessType.PROPERTY)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class NutritionalInfo {
 
     private Food suggestedFood;
@@ -35,8 +35,8 @@ public class NutritionalInfo {
         this.foodPhoto = foodPhoto;
     }
 
-	@Override
-	public String toString() {
-		return foodPhoto.toString() + suggestedFood.toString();
-	}
+//	@Override
+//	public String toString() {
+//		return foodPhoto.toString() + suggestedFood.toString();
+//	}
 }

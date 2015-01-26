@@ -114,7 +114,7 @@
 	</target>
 
 	<target name="execute">
-		<echo message="Executing Phrase Service" />
+		<echo message="Executing Director Service" />
 		<java classname="project.App" classpath="build" fork="true">
 			<classpath>
 				<fileset dir="${lib.dir}">
