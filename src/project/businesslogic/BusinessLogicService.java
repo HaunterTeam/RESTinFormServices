@@ -61,6 +61,9 @@ public class BusinessLogicService {
         else if(bmi > 29)
             list = dieteticFoods;
 
+        //Debug
+        list = fatFood;
+
         Random rmd = new Random();
         return dieteticFoods.get(rmd.nextInt(list.size() - 1));
     }
