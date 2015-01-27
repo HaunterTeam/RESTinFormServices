@@ -65,6 +65,6 @@ public class BusinessLogicService {
         list = fatFood;
 
         Random rmd = new Random();
-        return dieteticFoods.get(rmd.nextInt(list.size() - 1));
+        return list.get(rmd.nextInt(list.size() - 1));
     }
 }
