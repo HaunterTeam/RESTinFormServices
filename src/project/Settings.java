@@ -93,7 +93,7 @@ public final class Settings {
 	public static final String LOCAL_FLICKR_BASE_PATH = "/flickr/";
 
 	public static final String FLICKR_BASE_URL = "188.226.183.46:";
-	public static final String FLICKR_BASE_PORT = "";
+	public static final String FLICKR_BASE_PORT = "8040";
 	public static final String FLICKR_BASE_PATH = "/flickr-project/flickr/";
 
 	public static final String FLICKR_JSON_TITLE_ATTR = "title";
