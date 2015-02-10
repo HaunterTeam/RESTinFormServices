@@ -11,7 +11,7 @@ public final class Settings {
 	public static final String LOCAL_BASE_PORT = "9091";
 	public static final String LOCAL_BASE_PATH = "/project-director/";
 
-	public static final String BASE_URL = "restindirectorservice.herokuapp.com";
+	public static final String BASE_URL = "188.226.183.46:";
 	public static final String BASE_PORT = "9091";
 	public static final String BASE_PATH = "/project-director/";
 	
@@ -20,8 +20,8 @@ public final class Settings {
 	public static final String LOCAL_FB_BASE_PORT = "8020";
 	public static final String LOCAL_FB_BASE_PATH = "/project-facebook/auth?token=";
 
-	public static final String FB_BASE_URL = "restinfacebookservice.herokuapp.com";
-	public static final String FB_BASE_PORT = "";
+	public static final String FB_BASE_URL = "188.226.183.46:";
+	public static final String FB_BASE_PORT = "8020";
 	public static final String FB_BASE_PATH = "/project-facebook/auth?token=";
 	
     public static final String FB_JSON_OUT_ID_ATTR = "id";
@@ -42,8 +42,8 @@ public final class Settings {
 	public static final String LOCAL_PH_BASE_PORT = "8010";
 	public static final String LOCAL_PH_BASE_PATH = "/phrase-service/phrase";
 
-	public static final String PH_BASE_URL = "restinphraseservice.herokuapp.com";
-	public static final String PH_BASE_PORT = "";
+	public static final String PH_BASE_URL = "188.226.183.46:";
+	public static final String PH_BASE_PORT = "8010";
 	public static final String PH_BASE_PATH = "/phrase-service/phrase";
 	
 	public static final String PH_PARAM_BMI_LEVEL = "bmilvl";
@@ -64,8 +64,8 @@ public final class Settings {
 	public static final String LOCAL_CALC_BASE_PORT = "8030";
 	public static final String LOCAL_CALC_BASE_PATH = "/bmicalc-service/bmiutil";
 
-    public static final String CALC_BASE_URL = "bmicalculatorservice.herokuapp.com";
-	public static final String CALC_BASE_PORT = "";
+    public static final String CALC_BASE_URL = "188.226.183.46:";
+	public static final String CALC_BASE_PORT = "8030";
 	public static final String CALC_BASE_PATH = "/bmicalc-service/bmiutil";
 
 	public static final String CALC_PARAM_BMI = "bmi";
@@ -92,7 +92,7 @@ public final class Settings {
 	public static final String LOCAL_FLICKR_BASE_PORT = "9091";
 	public static final String LOCAL_FLICKR_BASE_PATH = "/flickr/";
 
-	public static final String FLICKR_BASE_URL = "restinflickrservice.herokuapp.com";
+	public static final String FLICKR_BASE_URL = "188.226.183.46:";
 	public static final String FLICKR_BASE_PORT = "";
 	public static final String FLICKR_BASE_PATH = "/flickr-project/flickr/";
 
