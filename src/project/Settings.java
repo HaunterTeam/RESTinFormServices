@@ -11,7 +11,7 @@ public final class Settings {
 	public static final String LOCAL_BASE_PORT = "9091";
 	public static final String LOCAL_BASE_PATH = "/project-director/";
 
-	public static final String BASE_URL = "188.226.183.46:";
+	public static final String BASE_URL = "188.226.183.46";
 	public static final String BASE_PORT = "9091";
 	public static final String BASE_PATH = "/project-director/";
 	
