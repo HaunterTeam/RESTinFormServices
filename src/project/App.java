@@ -17,7 +17,7 @@ public class App
         String port = Settings.BASE_PORT;
         String path = Settings.BASE_PATH;
 
-        URI baseUrl = new URI(protocol + hostname + ":" + port + path);
+        URI baseUrl = new URI(protocol + hostname + ':' + port + path);
         System.out.println("Starting standalone HTTP server..");
         JdkHttpServerFactory.createHttpServer(baseUrl, createApp());
         System.out.println("server starts on " + baseUrl + "\n [kill the process to exit]");
