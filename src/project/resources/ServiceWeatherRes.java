@@ -102,7 +102,10 @@ public class ServiceWeatherRes {
         	result_json.getJSONObject(Settings.FB_JSON_OUT_STATUS_OBJ)
         		.put(Settings.FB_JSON_OUT_STATUS_MESSAGE_ATTR, general_excep.getMessage());
         	System.err.println(result_json.toString());
-        	return callback + "(" + result_json.toString() + ")";
+        	//return callback + "(" + result_json.toString() + ")";
+            w1 = 1;
+            w2 = 1;
+            w3 = 1;
         }
 
         // DBService service called
