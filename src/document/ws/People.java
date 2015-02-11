@@ -31,8 +31,8 @@ public interface People {
      * @param personId
      * @return
      *     returns document.ws.Person
-     * @throws MalformedURLException_Exception
      * @throws IOException_Exception
+     * @throws MalformedURLException_Exception
      */
     @WebMethod
     @WebResult(name = "singlePerson", targetNamespace = "")

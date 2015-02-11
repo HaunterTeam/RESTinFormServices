@@ -23,6 +23,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *       &lt;sequence>
  *         &lt;element name="birthdate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="currentHealth" type="{http://ws.document/}measure" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="fb_id" type="{http://www.w3.org/2001/XMLSchema}double"/>
  *         &lt;element name="firstname" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="lastBMI" type="{http://www.w3.org/2001/XMLSchema}double"/>
@@ -41,6 +42,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlType(name = "person", propOrder = {
     "birthdate",
     "currentHealth",
+    "fbId",
     "firstname",
     "id",
     "lastBMI",
@@ -54,6 +56,8 @@ public class Person {
     protected XMLGregorianCalendar birthdate;
     @XmlElement(nillable = true)
     protected List<Measure> currentHealth;
+    @XmlElement(name = "fb_id")
+    protected double fbId;
     protected String firstname;
     protected Long id;
     protected double lastBMI;
@@ -113,6 +117,22 @@ public class Person {
             currentHealth = new ArrayList<Measure>();
         }
         return this.currentHealth;
+    }
+
+    /**
+     * Gets the value of the fbId property.
+     * 
+     */
+    public double getFbId() {
+        return fbId;
+    }
+
+    /**
+     * Sets the value of the fbId property.
+     * 
+     */
+    public void setFbId(double value) {
+        this.fbId = value;
     }
 
     /**
